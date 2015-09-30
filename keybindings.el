@@ -20,9 +20,11 @@
 
 (evil-leader/set-key "wn" 'eyebrowse-next-window-config)
 
-;;(define-key yas-minor-mode-map (kbd "<tab>") 'yas-expand)
-;;(define-key yas-minor-mode-map (kbd "TAB") 'yas-expand)
-
 (define-key global-map "\C-cc" 'org-capture)
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
+
+(eval-after-load 'yasnippet
+  '(progn
+     (define-key yas-minor-mode-map (kbd "<tab>") 'yas-expand)
+     (define-key yas-minor-mode-map (kbd "TAB") 'yas-expand)))

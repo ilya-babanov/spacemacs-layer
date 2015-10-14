@@ -98,7 +98,7 @@
     (core-handle-error process exit-code)))
 
 (defun core-print-success (process event status exit-code)
-  (princ (format "Process '%s' %s Status: %s\n Code: %s"
+  (princ (format "\nProcess %s\nEvent: %sStatus: %s\nCode: %s\n"
                  process event status exit-code)))
 
 (defun core-handle-error (process exit-code)

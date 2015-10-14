@@ -81,10 +81,14 @@
   (async-shell-command cmd-name))
 
 (defun core-start-process (cmd)
-  (setq buffer-name (concat "*" cmd "*"))
-  (setq buffer (get-buffer-create buffer-name))
-  (setq process (start-process-shell-command cmd buffer cmd))
-  (set-process-sentinel process 'core-process-message))
+  (if (not (get-process cmd))
+      (progn
+        (princ (format "Running process '%s'" cmd))
+        (setq buffer-name (concat "*" cmd "*"))
+        (setq buffer (get-buffer-create buffer-name))
+        (setq process (start-process-shell-command cmd buffer cmd))
+        (set-process-sentinel process 'core-process-message))
+    (princ (format "Process already exist '%s'" cmd))))
 
 (defun core-process-message (process event)
   (setq status (process-status process))

@@ -7,22 +7,25 @@
 
 (define-key evil-normal-state-map "§" 'helm-mini)
 
-(define-key evil-normal-state-map ",tr" 'tern-rename-variable)
-
 (define-key evil-normal-state-map ",f" 'neotree-find)
-
-(define-key evil-normal-state-map ",df" 'js-doc-insert-function-doc)
-(define-key evil-normal-state-map ",dt" 'js-doc-insert-file-doc)
 
 (define-key evil-normal-state-map "!" 'evil-search-highlight-persist-remove-all)
 
 (global-set-key (kbd "M-§") 'helm-mini)
 
-(evil-leader/set-key "wn" 'eyebrowse-next-window-config)
-
 (define-key global-map "\C-cc" 'org-capture)
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
+
+(evil-leader/set-key-for-mode 'js2-mode
+  "mgt" 'core-grunt-tests
+  "mgb" 'core-grunt-build
+  "mdf" 'js-doc-insert-function-doc
+  "mdt" 'js-doc-insert-file-doc
+  "mtr" 'tern-rename-variable)
+
+(evil-leader/set-key
+  "wn" 'eyebrowse-next-window-config)
 
 (eval-after-load 'yasnippet
   '(progn

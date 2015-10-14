@@ -87,16 +87,15 @@
   (set-process-sentinel process 'core-process-message))
 
 (defun core-process-message (process event)
-  (setq
-   status (process-status process)
-   exit-code (process-exit-status process))
+  (setq status (process-status process))
+  (setq exit-code (process-exit-status process))
   (if (= exit-code 0)
       (core-print-success process event status exit-code)
     (core-handle-error process exit-code)))
 
 (defun core-print-success (process event status exit-code)
-  (princ (format "Process '%s'\n %s Status: %s\n Code: %s"
-                 process event status exit-status)))
+  (princ (format "Process '%s' %s Status: %s\n Code: %s"
+                 process event status exit-code)))
 
 (defun core-handle-error (process exit-code)
   (princ (format "%s ERROR, CODE: %s" process exit-code))

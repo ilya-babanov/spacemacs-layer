@@ -65,3 +65,41 @@
   '(progn
     (setq-default shell-pop-autocd-to-working-dir nil)
     (setq-default shell-pop-window-height 60)))
+
+(defun core-grunt-tests ()
+  "Invokes grunt test task and shows output"
+  (interactive)
+  (core-start-process "grunt test --no-color"))
+
+(defun core-grunt-build ()
+  "Invokes grunt buil and shows output"
+  (interactive)
+  (core-start-process "grunt build --no-color"))
+
+(defun core-run-cmd (cmd &optional args)
+  (setq cmd-name (concat cmd " " args))
+  (async-shell-command cmd-name))
+
+(defun core-start-process (cmd)
+  (setq buffer-name (concat "*" cmd "*"))
+  (setq buffer (get-buffer-create buffer-name))
+  (setq process (start-process-shell-command cmd buffer cmd))
+  (set-process-sentinel process 'core-process-message))
+
+(defun core-process-message (process event)
+  (setq
+   status (process-status process)
+   exit-code (process-exit-status process))
+  (if (= exit-code 0)
+      (core-print-success process event status exit-code)
+    (core-handle-error process exit-code)))
+
+(defun core-print-success (process event status exit-code)
+  (princ (format "Process '%s'\n %s Status: %s\n Code: %s"
+                 process event status exit-status)))
+
+(defun core-handle-error (process exit-code)
+  (princ (format "%s ERROR, CODE: %s" process exit-code))
+  (setq buffer (process-buffer process))
+  (setq new-window (split-window-vertically))
+  (set-window-buffer new-window buffer))

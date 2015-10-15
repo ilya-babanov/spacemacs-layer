@@ -88,12 +88,12 @@
 (defun core-start-process (cmd)
   (if (not (get-process cmd))
       (progn
-        (princ (format "Running process '%s'" cmd))
+        (message "Running process '%s'" cmd)
         (setq buffer-name (concat "*" cmd "*"))
         (setq buffer (get-buffer-create buffer-name))
         (setq process (start-process-shell-command cmd buffer cmd))
         (set-process-sentinel process 'core-process-message))
-    (princ (format "Process already exist '%s'" cmd))))
+    (message "Process already exist '%s'" cmd)))
 
 (defun core-process-message (process event)
   (setq status (process-status process))
@@ -103,11 +103,11 @@
     (core-handle-error process exit-code)))
 
 (defun core-print-success (process event status exit-code)
-  (princ (format "\nProcess: %s\nEvent: %sStatus: %s\nCode: %s\n"
-                 process event status exit-code)))
+  (message "\nProcess: %s\nEvent: %sStatus: %s\nCode: %s\n"
+                 process event status exit-code))
 
 (defun core-handle-error (process exit-code)
-  (princ (format "%s ERROR, CODE: %s" process exit-code))
+  (message "%s ERROR, CODE: %s" process exit-code)
   (setq buffer (process-buffer process))
   (setq buffer-window (get-buffer-window buffer))
   (if (not buffer-window)

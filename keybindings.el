@@ -20,6 +20,7 @@
 (evil-leader/set-key-for-mode 'js2-mode
   "mgt" 'core-grunt-tests
   "mgb" 'core-grunt-build
+  "mnt" 'core-npm-tests
   "mdf" 'js-doc-insert-function-doc
   "mdt" 'js-doc-insert-file-doc
   "mtr" 'tern-rename-variable)

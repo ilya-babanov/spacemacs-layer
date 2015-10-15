@@ -71,6 +71,11 @@
   (interactive)
   (core-start-process "grunt test --no-color"))
 
+(defun core-npm-tests ()
+  "Invokes grunt test task and shows output"
+  (interactive)
+  (core-start-process "npm run test --no-color"))
+
 (defun core-grunt-build ()
   "Invokes grunt buil and shows output"
   (interactive)
@@ -104,5 +109,8 @@
 (defun core-handle-error (process exit-code)
   (princ (format "%s ERROR, CODE: %s" process exit-code))
   (setq buffer (process-buffer process))
-  (setq new-window (split-window-vertically))
-  (set-window-buffer new-window buffer))
+  (setq buffer-window (get-buffer-window buffer))
+  (if (not buffer-window)
+      (progn
+        (setq new-window (split-window-vertically))
+        (set-window-buffer new-window buffer))))

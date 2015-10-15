@@ -92,19 +92,27 @@
         (setq buffer-name (concat "*" cmd "*"))
         (setq buffer (get-buffer-create buffer-name))
         (setq process (start-process-shell-command cmd buffer cmd))
-        (set-process-sentinel process 'core-process-message))
+        (core-handle-progress process))
     (message "Process already exist '%s'" cmd)))
 
-(defun core-process-message (process event)
+(defun core-handle-progress (process)
+  (setq status (process-status process))
+  (if (string-equal status "exit")
+      (core-handle-result process)
+    (progn
+      (princ ".")
+      (run-at-time 0.1 nil 'core-handle-progress process))))
+
+(defun core-handle-result (process)
   (setq status (process-status process))
   (setq exit-code (process-exit-status process))
   (if (= exit-code 0)
-      (core-print-success process event status exit-code)
+      (core-handle-success process status exit-code)
     (core-handle-error process exit-code)))
 
-(defun core-print-success (process event status exit-code)
-  (message "\nProcess: %s\nEvent: %sStatus: %s\nCode: %s\n"
-                 process event status exit-code))
+(defun core-handle-success (process status exit-code)
+  (message "\nProcess: %s\nStatus: %s\nCode: %s\n"
+                 process status exit-code))
 
 (defun core-handle-error (process exit-code)
   (message "%s ERROR, CODE: %s" process exit-code)

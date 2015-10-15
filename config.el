@@ -111,7 +111,7 @@
     (core-handle-error process exit-code)))
 
 (defun core-handle-success (process status exit-code)
-  (message "\nProcess: %s\nStatus: %s\nCode: %s\n"
+  (message "Process: %s\nStatus: %s\nCode: %s"
                  process status exit-code))
 
 (defun core-handle-error (process exit-code)

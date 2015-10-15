@@ -18,6 +18,7 @@
       editorconfig
       jade-mode
       color-identifiers-mode
+      js-comint
       ))
 
 ;; List of packages to exclude.
@@ -39,3 +40,14 @@
 
 (defun core/init-color-identifiers-mode ())
 
+(defun core/init-js-comint()
+  (use-package js-comint
+    :defer t
+    :init
+    (progn
+      (setq inferior-js-program-command "node -i")
+      (evil-leader/set-key-for-mode 'js2-mode "mjL" 'js-send-last-sexp)
+      (evil-leader/set-key-for-mode 'js2-mode "mjl" 'js-send-last-sexp-and-go)
+      (evil-leader/set-key-for-mode 'js2-mode "mjB" 'js-send-buffer)
+      (evil-leader/set-key-for-mode 'js2-mode "mjb" 'js-send-buffer-and-go)
+      (evil-leader/set-key-for-mode 'js2-mode "mjf" 'js-load-file-and-go))))

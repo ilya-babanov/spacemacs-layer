@@ -112,5 +112,14 @@
   (setq buffer-window (get-buffer-window buffer))
   (if (not buffer-window)
       (progn
-        (setq new-window (split-window-vertically))
-        (set-window-buffer new-window buffer))))
+        (setq buffer-window (split-window-vertically))
+        (set-window-buffer buffer-window buffer)))
+  (core-show-window-bottom buffer-window))
+
+(defun core-show-window-bottom (window)
+  (with-selected-window window
+    (scroll-up-command
+     (- (core-get-remaining-lines-count) 5))))
+
+(defun core-get-remaining-lines-count ()
+    (count-lines (point) (buffer-end 1)))

@@ -69,17 +69,20 @@
 (defun core-grunt-tests ()
   "Invokes grunt test task and shows output"
   (interactive)
-  (core-try-start-process "grunt test --no-color"))
+  (core-try-start-process "grunt test"))
 
 (defun core-npm-tests ()
   "Invokes grunt test task and shows output"
   (interactive)
-  (core-try-start-process "npm run test --no-color"))
+  (core-try-start-process "npm run test"))
 
 (defun core-grunt-build ()
   "Invokes grunt buil and shows output"
   (interactive)
-  (core-try-start-process "grunt build --no-color"))
+  (core-try-start-process "grunt build"))
+
+(defvar core-process-progress-statuses
+  '(run listen open connect))
 
 (defun core-try-start-process (cmd)
   "Invokes passed command in background"
@@ -96,25 +99,21 @@
   (setq buffer-name (concat "*" cmd "*"))
   (setq buffer (get-buffer-create buffer-name))
   (setq process (start-process-shell-command cmd buffer cmd))
-  (core-handle-progress process)
-  (core-update-process-window process 0))
-
-(defun core-update-process-window (process line-to-scroll)
-  (setq buffer-window (core-get-process-window process))
-  (if buffer-window
-      (core-show-window-bottom buffer-window line-to-scroll)))
+  (with-current-buffer buffer (erase-buffer) (shell-mode))
+  (core-handle-progress process))
 
 (defun core-handle-progress (process)
   (setq status (process-status process))
-  (if (string-equal status "exit")
-      (core-handle-result process)
-    (progn
-      (princ ".")
-      (run-at-time 0.1 nil 'core-handle-progress process))))
+  (if (member status core-process-progress-statuses)
+      (progn
+        (princ ".")
+        (run-at-time 0.1 nil 'core-handle-progress process))
+    (core-handle-result process)))
 
 (defun core-handle-result (process)
   (setq status (process-status process))
   (setq exit-code (process-exit-status process))
+  (core-refresh-process-buffer process)
   (if (= exit-code 0)
       (core-handle-success process status exit-code)
     (core-handle-error process exit-code)))
@@ -133,13 +132,17 @@
       (progn
         (setq buffer-window (split-window-vertically))
         (set-window-buffer buffer-window buffer)))
-  (core-show-window-bottom buffer-window 4))
+  (core-refresh-process-window buffer-window 4))
 
 (defun core-get-process-window (process)
   (setq buffer (process-buffer process))
   (get-buffer-window buffer))
 
-(defun core-show-window-bottom (window lines-from-bottom)
+(defun core-refresh-process-buffer (process)
+  (with-current-buffer (process-buffer process)
+    (ansi-color-apply-on-region (point-min) (point-max))))
+
+(defun core-refresh-process-window (window lines-from-bottom)
   (with-selected-window window
     (scroll-up-command
      (- (core-get-remaining-lines-count) lines-from-bottom))))

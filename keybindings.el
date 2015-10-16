@@ -26,6 +26,7 @@
   "mtr" 'tern-rename-variable)
 
 (evil-leader/set-key
+  "cb" 'core-try-start-process
   "wn" 'eyebrowse-next-window-config)
 
 (eval-after-load 'yasnippet

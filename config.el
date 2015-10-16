@@ -82,6 +82,8 @@
   (core-try-start-process "grunt build --no-color"))
 
 (defun core-try-start-process (cmd)
+  "Invokes passed command in background"
+  (interactive "sCommand:")
   (setq process (get-process cmd))
   (if process
       (progn

@@ -69,31 +69,38 @@
 (defun core-grunt-tests ()
   "Invokes grunt test task and shows output"
   (interactive)
-  (core-start-process "grunt test --no-color"))
+  (core-try-start-process "grunt test --no-color"))
 
 (defun core-npm-tests ()
   "Invokes grunt test task and shows output"
   (interactive)
-  (core-start-process "npm run test --no-color"))
+  (core-try-start-process "npm run test --no-color"))
 
 (defun core-grunt-build ()
   "Invokes grunt buil and shows output"
   (interactive)
-  (core-start-process "grunt build --no-color"))
+  (core-try-start-process "grunt build --no-color"))
 
-(defun core-run-cmd (cmd &optional args)
-  (setq cmd-name (concat cmd " " args))
-  (async-shell-command cmd-name))
-
-(defun core-start-process (cmd)
-  (if (not (get-process cmd))
+(defun core-try-start-process (cmd)
+  (setq process (get-process cmd))
+  (if process
       (progn
-        (message "Running process '%s'" cmd)
-        (setq buffer-name (concat "*" cmd "*"))
-        (setq buffer (get-buffer-create buffer-name))
-        (setq process (start-process-shell-command cmd buffer cmd))
-        (core-handle-progress process))
-    (message "Process already exist '%s'" cmd)))
+        (message "Process already exist: %s" process)
+        (core-update-process-window process 0))
+    (core-run-process cmd)))
+
+(defun core-run-process (cmd)
+  (message "Running process '%s'" cmd)
+  (setq buffer-name (concat "*" cmd "*"))
+  (setq buffer (get-buffer-create buffer-name))
+  (setq process (start-process-shell-command cmd buffer cmd))
+  (core-handle-progress process)
+  (core-update-process-window process 0))
+
+(defun core-update-process-window (process line-to-scroll)
+  (setq buffer-window (core-get-process-window process))
+  (if buffer-window
+      (core-show-window-bottom buffer-window line-to-scroll)))
 
 (defun core-handle-progress (process)
   (setq status (process-status process))
@@ -111,8 +118,10 @@
     (core-handle-error process exit-code)))
 
 (defun core-handle-success (process status exit-code)
-  (message "Process: %s\nStatus: %s\nCode: %s"
-                 process status exit-code))
+  (message "Process: %s\nStatus: %s\nCode: %s" process status exit-code)
+  (setq buffer-window (core-get-process-window process))
+  (if buffer-window
+      (delete-window buffer-window)))
 
 (defun core-handle-error (process exit-code)
   (message "%s ERROR, CODE: %s" process exit-code)
@@ -122,12 +131,16 @@
       (progn
         (setq buffer-window (split-window-vertically))
         (set-window-buffer buffer-window buffer)))
-  (core-show-window-bottom buffer-window))
+  (core-show-window-bottom buffer-window 4))
 
-(defun core-show-window-bottom (window)
+(defun core-get-process-window (process)
+  (setq buffer (process-buffer process))
+  (get-buffer-window buffer))
+
+(defun core-show-window-bottom (window lines-from-bottom)
   (with-selected-window window
     (scroll-up-command
-     (- (core-get-remaining-lines-count) 5))))
+     (- (core-get-remaining-lines-count) lines-from-bottom))))
 
 (defun core-get-remaining-lines-count ()
     (count-lines (point) (buffer-end 1)))

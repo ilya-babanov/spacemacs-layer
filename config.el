@@ -69,21 +69,33 @@
 (defun core-grunt-tests ()
   "Invokes grunt test task and shows output"
   (interactive)
-  (core-try-start-process "grunt test"))
+  (let* ((core-close-after-success t))
+    (core-try-start-process "grunt test")))
 
 (defun core-npm-tests ()
   "Invokes grunt test task and shows output"
   (interactive)
-  (core-try-start-process "npm run test"))
+  (let* ((core-close-after-success t))
+    (core-try-start-process "npm run test")))
 
 (defun core-grunt-build ()
   "Invokes grunt buil and shows output"
   (interactive)
-  (core-try-start-process "grunt build"))
+  (let* ((core-close-after-success t))
+    (core-try-start-process "grunt build")))
 
-(defvar core-process-progress-statuses '(run listen open connect))
-(defvar core-process-poll-timout 0.15)
-(defvar core-process-hide-progress nil)
+(defun core-test ()
+  "Test function"
+  (interactive)
+  (let* ((core-erase-process-buffer nil))
+    (core-try-start-process "grunt test")))
+
+(defvar core-close-after-success nil)
+(defvar core-erase-process-buffer t)
+(defvar core-process-mode 'shell-mode)
+(defvar core-hide-progress nil)
+(defvar core-poll-timout 0.15)
+(defvar core-run-statuses '(run listen open connect))
 
 (defun core-try-start-process (cmd)
   "Invokes passed command in background"
@@ -100,34 +112,43 @@
   (let* ((buffer-name (concat "*" cmd "*"))
         (buffer (get-buffer-create buffer-name))
         (process (start-process-shell-command cmd buffer cmd)))
-    (with-current-buffer buffer (erase-buffer) (shell-mode))
-    (if core-process-hide-progress
+    (set-process-plist process (core-create-process-plist))
+    (core-config-process-buffer buffer)
+    (if core-hide-progress
         (set-process-sentinel process 'core-handle-result)
-      (progn
-        (set-process-plist process '(poll-timeout))
-        (process-put process 'poll-timeout core-process-poll-timout)
-        (core-handle-progress process)))))
+      (core-handle-progress process))))
+
+(defun core-create-process-plist ()
+  (list 'poll-timeout core-poll-timout
+        'run-statuses core-run-statuses
+        'close-after-success core-close-after-success))
+
+(defun core-config-process-buffer (buffer)
+  (with-current-buffer buffer
+    (if core-erase-process-buffer (erase-buffer))
+    (funcall core-process-mode)))
 
 (defun core-handle-progress (process)
-  (let* ((status (process-status process)))
-    (if (member status core-process-progress-statuses)
+  (let* ((status (process-status process))
+         (run-statuses (process-get process 'run-statuses)))
+    (if (member status run-statuses)
         (progn
           (princ ".")
           (run-at-time (process-get process 'poll-timeout) nil 'core-handle-progress process))
       (core-handle-result process))))
 
 (defun core-handle-result (process &optional event)
-  (let* ((status (process-status process))
-         (exit-code (process-exit-status process)))
+  (let* ((exit-code (process-exit-status process)))
     (core-refresh-process-buffer process)
     (if (= exit-code 0)
-        (core-handle-success process status exit-code)
+        (core-handle-success process exit-code)
       (core-handle-error process exit-code))))
 
-(defun core-handle-success (process status exit-code)
-  (message "Process: %s\nStatus: %s\nCode: %s" process status exit-code)
-  (let* ((buffer-window (core-get-process-window process)))
-    (if buffer-window
+(defun core-handle-success (process exit-code)
+  (message "Process: %s\nCode: %s" process exit-code)
+  (let* ((buffer-window (core-get-process-window process))
+         (close-after-success (process-get process 'close-after-success)))
+    (if (and buffer-window close-after-success)
         (delete-window buffer-window))))
 
 (defun core-handle-error (process exit-code)

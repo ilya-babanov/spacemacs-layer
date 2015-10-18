@@ -69,47 +69,51 @@
 (defun core-grunt-tests ()
   "Invokes grunt test task and shows output"
   (interactive)
-  (core-try-start-process "grunt test" t))
+  (core-try-start-process "grunt test"))
 
 (defun core-npm-tests ()
   "Invokes grunt test task and shows output"
   (interactive)
-  (core-try-start-process "npm run test" t))
+  (core-try-start-process "npm run test"))
 
 (defun core-grunt-build ()
   "Invokes grunt buil and shows output"
   (interactive)
-  (core-try-start-process "grunt build" t))
+  (core-try-start-process "grunt build"))
 
 (defvar core-process-progress-statuses '(run listen open connect))
 (defvar core-process-poll-timout 0.15)
+(defvar core-process-hide-progress nil)
 
-(defun core-try-start-process (cmd &optional show-progress)
+(defun core-try-start-process (cmd)
   "Invokes passed command in background"
   (interactive "sCommand:")
   (let* ((process (get-process cmd)))
     (if process
         (progn
           (message "Process already exist: %s" process)
-          (core-update-process-window process 0))
-      (core-run-process cmd show-progress))))
+          (core-try-refresh-process-window process))
+      (core-run-process cmd))))
 
-(defun core-run-process (cmd &optional show-progress)
+(defun core-run-process (cmd)
   (message "Running process '%s'" cmd)
   (let* ((buffer-name (concat "*" cmd "*"))
         (buffer (get-buffer-create buffer-name))
         (process (start-process-shell-command cmd buffer cmd)))
     (with-current-buffer buffer (erase-buffer) (shell-mode))
-    (if show-progress
-        (core-handle-progress process)
-      (set-process-sentinel process 'core-handle-result))))
+    (if core-process-hide-progress
+        (set-process-sentinel process 'core-handle-result)
+      (progn
+        (set-process-plist process '(poll-timeout))
+        (process-put process 'poll-timeout core-process-poll-timout)
+        (core-handle-progress process)))))
 
 (defun core-handle-progress (process)
   (let* ((status (process-status process)))
     (if (member status core-process-progress-statuses)
         (progn
           (princ ".")
-          (run-at-time core-process-poll-timout nil 'core-handle-progress process))
+          (run-at-time (process-get process 'poll-timeout) nil 'core-handle-progress process))
       (core-handle-result process))))
 
 (defun core-handle-result (process &optional event)
@@ -140,13 +144,17 @@
   (let* ((buffer (process-buffer process)))
     (get-buffer-window buffer)))
 
-(defun core-refresh-process-buffer (process)
-  (with-current-buffer (process-buffer process)
-    (ansi-color-apply-on-region (point-min) (point-max))))
+(defun core-try-refresh-process-window (process)
+  (let* ((window (core-get-process-window process)))
+    (if window (core-refresh-process-window window))))
 
 (defun core-refresh-process-window (window)
   (with-selected-window window
     (scroll-up-command (core-get-remaining-lines-count))))
+
+(defun core-refresh-process-buffer (process)
+  (with-current-buffer (process-buffer process)
+    (ansi-color-apply-on-region (point-min) (point-max))))
 
 (defun core-get-remaining-lines-count ()
     (count-lines (point) (buffer-end 1)))

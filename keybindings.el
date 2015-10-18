@@ -26,6 +26,8 @@
   "mtr" 'tern-rename-variable)
 
 (evil-leader/set-key
+  "gp" 'magit-pull-popup
+  "gP" 'magit-push-popup
   "cb" 'core-try-start-process
   "wn" 'eyebrowse-next-window-config)
 

@@ -81,20 +81,23 @@
 (defun core-grunt-build ()
   "Invokes grunt buil and shows output"
   (interactive)
-  (let* ((core-close-after-success t))
+  (let* ((core-poll-timout 3)
+         (core-close-after-success t))
     (core-try-start-process "grunt build")))
 
 (defun core-test ()
   "Test function"
   (interactive)
-  (let* ((core-erase-process-buffer nil))
+  (let* ((core-open-after-error nil)
+         (core-erase-process-buffer nil))
     (core-try-start-process "grunt test")))
 
 (defvar core-close-after-success nil)
+(defvar core-open-after-error t)
 (defvar core-erase-process-buffer t)
 (defvar core-process-mode 'shell-mode)
 (defvar core-hide-progress nil)
-(defvar core-poll-timout 0.15)
+(defvar core-poll-timout 0.2)
 (defvar core-run-statuses '(run listen open connect))
 
 (defun core-try-start-process (cmd)
@@ -121,7 +124,9 @@
 (defun core-create-process-plist ()
   (list 'poll-timeout core-poll-timout
         'run-statuses core-run-statuses
-        'close-after-success core-close-after-success))
+        'close-after-success core-close-after-success
+        'open-after-error core-open-after-error
+        'start-time (float-time)))
 
 (defun core-config-process-buffer (buffer)
   (with-current-buffer buffer
@@ -132,34 +137,42 @@
   (let* ((status (process-status process))
          (run-statuses (process-get process 'run-statuses)))
     (if (member status run-statuses)
-        (progn
-          (princ ".")
-          (run-at-time (process-get process 'poll-timeout) nil 'core-handle-progress process))
+        (let* ((poll-timeout (process-get process 'poll-timeout))
+               (time-diff (core-get-process-time-diff process)))
+          (message "%fs => %s" time-diff process)
+          (run-at-time poll-timeout nil 'core-handle-progress process))
       (core-handle-result process))))
 
 (defun core-handle-result (process &optional event)
   (let* ((exit-code (process-exit-status process)))
     (core-refresh-process-buffer process)
     (if (= exit-code 0)
-        (core-handle-success process exit-code)
+        (core-handle-success process)
       (core-handle-error process exit-code))))
 
-(defun core-handle-success (process exit-code)
-  (message "Process: %s\nCode: %s" process exit-code)
+(defun core-handle-success (process)
+  (message "Success\nProcess: %s\nTime: %f"
+           process (core-get-process-time-diff process))
   (let* ((buffer-window (core-get-process-window process))
          (close-after-success (process-get process 'close-after-success)))
     (if (and buffer-window close-after-success)
         (delete-window buffer-window))))
 
 (defun core-handle-error (process exit-code)
-  (message "%s ERROR, CODE: %s" process exit-code)
+  (message "Error code: %s\nProcess: %s\nTime: %f"
+           exit-code process (core-get-process-time-diff process))
   (let* ((buffer (process-buffer process))
-         (buffer-window (get-buffer-window buffer)))
-    (if (not buffer-window)
+         (buffer-window (get-buffer-window buffer))
+         (open-after-error (process-get process 'open-after-error)))
+    (if (and open-after-error (not buffer-window))
         (progn
           (setq buffer-window (split-window-vertically))
           (set-window-buffer buffer-window buffer)))
-    (core-refresh-process-window buffer-window)))
+    (core-try-refresh-process-window process)))
+
+(defun core-get-process-time-diff (process)
+  (let* ((start-time (process-get process 'start-time)))
+    (- (float-time) start-time)))
 
 (defun core-get-process-window (process)
   (let* ((buffer (process-buffer process)))

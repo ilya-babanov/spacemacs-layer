@@ -168,8 +168,9 @@
     (core-try-refresh-process-window process)))
 
 (defun core-show-progress-message (process)
-  (let* ((time-diff (core-get-process-time-diff process)))
-    (message "%fs | %s" time-diff process)))
+  (let* ((status (process-status process))
+         (time-diff (core-get-process-time-diff process)))
+    (message "Status: %s | Time: %f | Process: %s" status time-diff process)))
 
 (defun core-show-success-message (process)
   (message "Success\nProcess: %s\nTime: %f"

@@ -151,16 +151,14 @@
       (core-handle-error process exit-code))))
 
 (defun core-handle-success (process)
-  (message "Success\nProcess: %s\nTime: %f"
-           process (core-get-process-time-diff process))
+  (core-show-success-message process)
   (let* ((buffer-window (core-get-process-window process))
          (close-after-success (process-get process 'close-after-success)))
     (if (and buffer-window close-after-success)
         (delete-window buffer-window))))
 
 (defun core-handle-error (process exit-code)
-  (message "Error code: %s\nProcess: %s\nTime: %f"
-           exit-code process (core-get-process-time-diff process))
+  (core-show-error-message process exit-code)
   (let* ((buffer (process-buffer process))
          (buffer-window (get-buffer-window buffer))
          (open-after-error (process-get process 'open-after-error)))
@@ -169,6 +167,14 @@
           (setq buffer-window (split-window-vertically))
           (set-window-buffer buffer-window buffer)))
     (core-try-refresh-process-window process)))
+
+(defun core-show-success-message (process)
+  (message "Success\nProcess: %s\nTime: %f"
+           process (core-get-process-time-diff process)))
+
+(defun core-show-error-message (process exit-code)
+  (message "Error code: %s\nProcess: %s\nTime: %f"
+           exit-code process (core-get-process-time-diff process)))
 
 (defun core-get-process-time-diff (process)
   (let* ((start-time (process-get process 'start-time)))

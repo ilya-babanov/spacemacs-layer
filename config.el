@@ -81,7 +81,7 @@
 (defun core-grunt-build ()
   "Invokes grunt buil and shows output"
   (interactive)
-  (let* ((core-poll-timout 3)
+  (let* ((core-poll-timout 0.3)
          (core-close-after-success t))
     (core-try-start-process "grunt build")))
 
@@ -92,12 +92,33 @@
          (core-erase-process-buffer nil))
     (core-try-start-process "grunt test")))
 
-(defvar core-close-after-success nil)
-(defvar core-open-after-error t)
-(defvar core-erase-process-buffer t)
-(defvar core-process-mode 'shell-mode)
-(defvar core-show-progress t)
-(defvar core-poll-timout 0.2)
+(defcustom core-close-after-success nil
+  "Should process's window be closed after success"
+  :type 'boolean)
+
+(defcustom core-open-after-error t
+  "Should window with process output be opened after error"
+  :type 'boolean)
+
+(defcustom core-window-creator 'split-window-vertically
+  "Function for creating window for process"
+  :type 'function)
+
+(defcustom core-process-mode 'shell-mode
+  "Mode for process's buffer"
+  :type 'function)
+
+(defcustom core-erase-process-buffer t
+  "Shuld process's buffer be erased before starting new process"
+  :type 'boolean)
+
+(defcustom core-show-progress t
+  "Should process's progress be shown"
+  :type 'boolean)
+
+(defcustom core-poll-timout 0.2
+  "Progress update interval"
+  :type 'number)
 
 (defun core-try-start-process (cmd)
   "Invokes passed command in background"
@@ -124,6 +145,8 @@
         'close-after-success core-close-after-success
         'open-after-error core-open-after-error
         'show-progress core-show-progress
+        'window-creator core-window-creator
+        'last-colorized-position 0
         'start-time (float-time)))
 
 (defun core-config-process-buffer (buffer)
@@ -135,6 +158,7 @@
   (if (process-live-p process)
       (let* ((show-progress (process-get process 'show-progress)))
         (if show-progress (core-show-progress-message process))
+        (core-colorize-process-buffer process)
         (core-delay-progress-handler process))))
 
 (defun core-delay-progress-handler (process)
@@ -144,7 +168,7 @@
 (defun core-handle-result (process &optional event)
   (if (not (process-live-p process))
       (let* ((exit-code (process-exit-status process)))
-        (core-refresh-process-buffer process)
+        (core-colorize-process-buffer process)
         (if (= exit-code 0)
             (core-handle-success process)
           (core-handle-error process exit-code)))))
@@ -163,7 +187,7 @@
          (open-after-error (process-get process 'open-after-error)))
     (if (and open-after-error (not buffer-window))
         (progn
-          (setq buffer-window (split-window-vertically))
+          (setq buffer-window (funcall (process-get process 'window-creator)))
           (set-window-buffer buffer-window buffer)))
     (core-try-refresh-process-window process)))
 
@@ -196,9 +220,12 @@
   (with-selected-window window
     (scroll-up-command (core-get-remaining-lines-count))))
 
-(defun core-refresh-process-buffer (process)
+(defun core-colorize-process-buffer (process)
   (with-current-buffer (process-buffer process)
-    (ansi-color-apply-on-region (point-min) (point-max))))
+    (let* ((max-position (point-max))
+           (current-position (process-get process 'last-colorized-position)))
+      (ansi-color-apply-on-region current-position max-position)
+      (process-put process 'last-colorized-position max-position))))
 
 (defun core-get-remaining-lines-count ()
     (count-lines (point) (buffer-end 1)))

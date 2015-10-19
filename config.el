@@ -96,9 +96,8 @@
 (defvar core-open-after-error t)
 (defvar core-erase-process-buffer t)
 (defvar core-process-mode 'shell-mode)
-(defvar core-hide-progress nil)
+(defvar core-show-progress t)
 (defvar core-poll-timout 0.2)
-(defvar core-run-statuses '(run listen open connect))
 
 (defun core-try-start-process (cmd)
   "Invokes passed command in background"
@@ -113,19 +112,18 @@
 (defun core-run-process (cmd)
   (message "Running process '%s'" cmd)
   (let* ((buffer-name (concat "*" cmd "*"))
-        (buffer (get-buffer-create buffer-name))
-        (process (start-process-shell-command cmd buffer cmd)))
+         (buffer (get-buffer-create buffer-name))
+         (process (start-process-shell-command cmd buffer cmd)))
     (set-process-plist process (core-create-process-plist))
-    (core-config-process-buffer buffer)
-    (if core-hide-progress
-        (set-process-sentinel process 'core-handle-result)
-      (core-handle-progress process))))
+    (set-process-sentinel process 'core-handle-result)
+    (core-handle-progress process)
+    (core-config-process-buffer buffer)))
 
 (defun core-create-process-plist ()
   (list 'poll-timeout core-poll-timout
-        'run-statuses core-run-statuses
         'close-after-success core-close-after-success
         'open-after-error core-open-after-error
+        'show-progress core-show-progress
         'start-time (float-time)))
 
 (defun core-config-process-buffer (buffer)
@@ -134,21 +132,22 @@
     (funcall core-process-mode)))
 
 (defun core-handle-progress (process)
-  (let* ((status (process-status process))
-         (run-statuses (process-get process 'run-statuses)))
-    (if (member status run-statuses)
-        (let* ((poll-timeout (process-get process 'poll-timeout))
-               (time-diff (core-get-process-time-diff process)))
-          (message "%fs => %s" time-diff process)
-          (run-at-time poll-timeout nil 'core-handle-progress process))
-      (core-handle-result process))))
+  (if (process-live-p process)
+      (let* ((show-progress (process-get process 'show-progress)))
+        (if show-progress (core-show-progress-message process))
+        (core-delay-progress-handler process))))
+
+(defun core-delay-progress-handler (process)
+  (let* ((poll-timeout (process-get process 'poll-timeout)))
+    (run-at-time poll-timeout nil 'core-handle-progress process)))
 
 (defun core-handle-result (process &optional event)
-  (let* ((exit-code (process-exit-status process)))
-    (core-refresh-process-buffer process)
-    (if (= exit-code 0)
-        (core-handle-success process)
-      (core-handle-error process exit-code))))
+  (if (not (process-live-p process))
+      (let* ((exit-code (process-exit-status process)))
+        (core-refresh-process-buffer process)
+        (if (= exit-code 0)
+            (core-handle-success process)
+          (core-handle-error process exit-code)))))
 
 (defun core-handle-success (process)
   (core-show-success-message process)
@@ -167,6 +166,10 @@
           (setq buffer-window (split-window-vertically))
           (set-window-buffer buffer-window buffer)))
     (core-try-refresh-process-window process)))
+
+(defun core-show-progress-message (process)
+  (let* ((time-diff (core-get-process-time-diff process)))
+    (message "%fs | %s" time-diff process)))
 
 (defun core-show-success-message (process)
   (message "Success\nProcess: %s\nTime: %f"

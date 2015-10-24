@@ -12,6 +12,7 @@
 (define-key evil-normal-state-map "!" 'evil-search-highlight-persist-remove-all)
 
 (global-set-key (kbd "M-§") 'helm-mini)
+(global-set-key (kbd "<f4>") 'shell-pop-ansi-term)
 
 (define-key global-map "\C-cc" 'org-capture)
 (define-key global-map "\C-cl" 'org-store-link)

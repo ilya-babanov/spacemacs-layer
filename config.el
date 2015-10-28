@@ -116,6 +116,13 @@
   "Mode for process's buffer"
   :type 'function)
 
+(defcustom core-process-directory nil
+  "Directory for process.
+If not nil, this will be default-direcotry for process.
+If nil, standart default-direcotry will be used,
+or projectile-project-root, if it's available."
+  :type 'function)
+
 (defcustom core-erase-process-buffer t
   "Shuld process's buffer be erased before starting new process"
   :type 'boolean)
@@ -135,7 +142,8 @@
 (defun core-try-start-process (cmd)
   "Invokes passed command in background"
   (interactive "sCommand:")
-  (let* ((process (get-process cmd)))
+  (let* ((proc-name (core-create-process-name cmd))
+         (process (get-process proc-name)))
     (if process
         (progn
           (message "Process already exist: %s" process)
@@ -144,13 +152,29 @@
 
 (defun core-run-process (cmd)
   (message "Running process '%s'" cmd)
-  (let* ((buffer-name (concat "*" cmd "*"))
-         (buffer (get-buffer-create buffer-name))
-         (process (start-process-shell-command cmd buffer cmd)))
+  (let* ((default-directory (core-get-current-directory))
+         (proc-name (core-create-process-name cmd))
+         (buff-name (concat "*" proc-name "*"))
+         (buffer (get-buffer-create buff-name))
+         (process (start-process-shell-command proc-name buffer cmd)))
+    (message default-directory)
     (set-process-plist process (core-create-process-plist))
     (set-process-sentinel process 'core-handle-result)
     (core-handle-progress process)
     (core-config-process-buffer buffer)))
+
+(defun core-get-current-directory ()
+  (if core-process-directory
+      core-process-directory
+    (core-try-get-project-root)))
+
+(defun core-try-get-project-root ()
+  (if (fboundp 'projectile-project-root)
+      (projectile-project-root)
+    default-directory))
+
+(defun core-create-process-name (cmd)
+  (concat cmd " (" (core-get-current-directory) ")"))
 
 (defun core-create-process-plist ()
   (list 'poll-timeout core-poll-timout

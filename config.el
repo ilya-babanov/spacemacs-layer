@@ -207,13 +207,13 @@
     (message "Status: %s   Time: %f   Process: %s" status time-diff process)))
 
 (defun core-show-success-message (process)
-  (message "%s   Time: %f   Process: %s"
+  (message "Status: %s   Time: %f   Process: %s"
            (propertize "Success" 'face '(:foreground "green"))
            (core-get-process-time-diff process)
            process))
 
 (defun core-show-error-message (process exit-code)
-  (message "%s   Code: %s   Time: %f   Process: %s"
+  (message "Status: %s   Code: %s   Time: %f   Process: %s"
            (propertize "Error" 'face '(:foreground "red"))
            exit-code
            (core-get-process-time-diff process)

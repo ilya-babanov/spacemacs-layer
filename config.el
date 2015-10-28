@@ -234,7 +234,8 @@
 
 (defun core-refresh-process-window (window direction)
   (with-selected-window window
-    (scroll-down-command (core-get-remaining-lines-count direction))))
+    (ignore-errors
+      (scroll-down-command (core-get-remaining-lines-count direction)))))
 
 (defun core-colorize-process-buffer (process)
   (with-current-buffer (process-buffer process)

@@ -64,18 +64,20 @@
 (eval-after-load 'shell-pop
   '(progn
     (setq-default shell-pop-autocd-to-working-dir nil)
-    (setq-default shell-pop-window-height 60)))
+    (setq-default shell-pop-window-height 65)))
 
 (defun core-grunt-tests ()
   "Invokes grunt test task and shows output"
   (interactive)
-  (let* ((core-close-after-success t))
+  (let* ((core-scroll-direction -1)
+         (core-close-after-success t))
     (core-try-start-process "grunt test")))
 
 (defun core-npm-tests ()
   "Invokes grunt test task and shows output"
   (interactive)
-  (let* ((core-close-after-success t))
+  (let* ((core-scroll-direction -1)
+         (core-close-after-success t))
     (core-try-start-process "npm run test")))
 
 (defun core-grunt-build ()
@@ -118,6 +120,10 @@
   "Shuld process's buffer be erased before starting new process"
   :type 'boolean)
 
+(defcustom core-scroll-direction 1
+  "Scroll text in error window, -1 for scroll up, 1 - scroll down"
+  :type 'number)
+
 (defcustom core-show-progress t
   "Should process's progress be shown"
   :type 'boolean)
@@ -152,6 +158,7 @@
         'open-after-error core-open-after-error
         'show-progress core-show-progress
         'window-creator core-window-creator
+        'scroll-direction core-scroll-direction
         'start-time (float-time)))
 
 (defun core-config-process-buffer (buffer)
@@ -163,7 +170,6 @@
   (if (process-live-p process)
       (let* ((show-progress (process-get process 'show-progress)))
         (when show-progress (core-show-progress-message process))
-        (core-colorize-process-buffer process)
         (core-delay-progress-handler process))))
 
 (defun core-delay-progress-handler (process)
@@ -171,9 +177,9 @@
     (run-at-time poll-timeout nil 'core-handle-progress process)))
 
 (defun core-handle-result (process &optional event)
+  (core-colorize-process-buffer process)
   (unless (process-live-p process)
     (let* ((exit-code (process-exit-status process)))
-      (core-colorize-process-buffer process)
       (if (= exit-code 0)
           (core-handle-success process)
         (core-handle-error process exit-code)))))
@@ -198,15 +204,20 @@
 (defun core-show-progress-message (process)
   (let* ((status (process-status process))
          (time-diff (core-get-process-time-diff process)))
-    (message "Status: %s | Time: %f | Process: %s" status time-diff process)))
+    (message "Status: %s   Time: %f   Process: %s" status time-diff process)))
 
 (defun core-show-success-message (process)
-  (message "Success\nProcess: %s\nTime: %f"
-           process (core-get-process-time-diff process)))
+  (message "%s   Time: %f   Process: %s"
+           (propertize "Success" 'face '(:foreground "green"))
+           (core-get-process-time-diff process)
+           process))
 
 (defun core-show-error-message (process exit-code)
-  (message "Error code: %s\nProcess: %s\nTime: %f"
-           exit-code process (core-get-process-time-diff process)))
+  (message "%s   Code: %s   Time: %f   Process: %s"
+           (propertize "Error" 'face '(:foreground "red"))
+           exit-code
+           (core-get-process-time-diff process)
+           process))
 
 (defun core-get-process-time-diff (process)
   (let* ((start-time (process-get process 'start-time)))
@@ -217,16 +228,17 @@
     (get-buffer-window buffer)))
 
 (defun core-try-refresh-process-window (process)
-  (let* ((window (core-get-process-window process)))
-    (when window (core-refresh-process-window window))))
+  (let* ((window (core-get-process-window process))
+         (scroll-direciton (process-get process 'scroll-direction)))
+    (when window (core-refresh-process-window window scroll-direciton))))
 
-(defun core-refresh-process-window (window)
+(defun core-refresh-process-window (window direction)
   (with-selected-window window
-    (scroll-up-command (core-get-remaining-lines-count))))
+    (scroll-down-command (core-get-remaining-lines-count direction))))
 
 (defun core-colorize-process-buffer (process)
   (with-current-buffer (process-buffer process)
       (ansi-color-apply-on-region (point-min) (point-max))))
 
-(defun core-get-remaining-lines-count ()
-    (count-lines (point) (buffer-end 1)))
+(defun core-get-remaining-lines-count (direction)
+    (count-lines (point) (buffer-end direction)))

@@ -66,25 +66,25 @@
     (setq-default shell-pop-autocd-to-working-dir nil)
     (setq-default shell-pop-window-height 65)))
 
-(add-to-list 'load-path "~/my-projects/emacs-bp/")
-(require 'bp)
+(add-to-list 'load-path "~/my-projects/emacs-bpr/")
+(require 'bpr)
 
-(setq bp-close-after-success t)
+(setq bpr-close-after-success t)
 
 (defun core-grunt-tests ()
   "Invokes grunt test task and shows output"
   (interactive)
-  (let* ((bp-scroll-direction -1))
-    (bp-spawn "grunt test --color")))
+  (let* ((bpr-scroll-direction -1))
+    (bpr-spawn "grunt test --color")))
 
 (defun core-grunt-build ()
   "Invokes grunt buil and shows output"
   (interactive)
-  (let* ((bp-poll-timout 0.3))
-    (bp-spawn "grunt build --color")))
+  (let* ((bpr-poll-timout 0.3))
+    (bpr-spawn "grunt build --color")))
 
 (defun core-npm-tests ()
   "Invokes grunt test task and shows output"
   (interactive)
-  (let* ((bp-scroll-direction -1))
-    (bp-spawn "npm run test --color")))
+  (let* ((bpr-scroll-direction -1))
+    (bpr-spawn "npm run test --color")))

@@ -19,6 +19,7 @@
       jade-mode
       color-identifiers-mode
       js-comint
+      flycheck-package
       ))
 
 ;; List of packages to exclude.
@@ -34,13 +35,13 @@
 ;; For more info on `use-package', see readme:
 ;; https://github.com/jwiegley/use-package
 
-(defun core/init-editorconfig())
+(defun core/init-editorconfig ())
 
-(defun core/init-jade-mode())
+(defun core/init-jade-mode ())
 
 (defun core/init-color-identifiers-mode ())
 
-(defun core/init-js-comint()
+(defun core/init-js-comint ()
   (use-package js-comint
     :defer t
     :init
@@ -51,3 +52,9 @@
       (evil-leader/set-key-for-mode 'js2-mode "mjB" 'js-send-buffer)
       (evil-leader/set-key-for-mode 'js2-mode "mjb" 'js-send-buffer-and-go)
       (evil-leader/set-key-for-mode 'js2-mode "mjf" 'js-load-file-and-go))))
+
+(defun core/init-flycheck-package ()
+  (use-package flycheck-package
+    :defer t
+    :config
+    '(flycheck-package-setup)))

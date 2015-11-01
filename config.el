@@ -69,23 +69,22 @@
 (add-to-list 'load-path "~/my-projects/emacs-bp/")
 (require 'bp)
 
+(setq bp-close-after-success t)
+
 (defun core-grunt-tests ()
   "Invokes grunt test task and shows output"
   (interactive)
-  (let* ((bp-scroll-direction -1)
-         (bp-close-after-success t))
+  (let* ((bp-scroll-direction -1))
     (bp-spawn "grunt test --color")))
 
 (defun core-grunt-build ()
   "Invokes grunt buil and shows output"
   (interactive)
-  (let* ((bp-poll-timout 0.3)
-         (bp-close-after-success t))
+  (let* ((bp-poll-timout 0.3))
     (bp-spawn "grunt build --color")))
 
 (defun core-npm-tests ()
   "Invokes grunt test task and shows output"
   (interactive)
-  (let* ((bp-scroll-direction -1)
-         (bp-close-after-success t))
+  (let* ((bp-scroll-direction -1))
     (bp-spawn "npm run test --color")))

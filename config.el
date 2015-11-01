@@ -70,6 +70,7 @@
 (require 'bpr)
 
 (setq bpr-close-after-success t)
+(setq bpr-colorize-output t)
 
 (defun core-grunt-tests ()
   "Invokes grunt test task and shows output"

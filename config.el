@@ -74,25 +74,18 @@
   (interactive)
   (let* ((bp-scroll-direction -1)
          (bp-close-after-success t))
-    (bp-spawn "grunt test")))
-
-(defun core-npm-tests ()
-  "Invokes grunt test task and shows output"
-  (interactive)
-  (let* ((bp-scroll-direction -1)
-         (bp-close-after-success t))
-    (bp-spawn "npm run test")))
+    (bp-spawn "grunt test --color")))
 
 (defun core-grunt-build ()
   "Invokes grunt buil and shows output"
   (interactive)
   (let* ((bp-poll-timout 0.3)
          (bp-close-after-success t))
-    (bp-spawn "grunt build")))
+    (bp-spawn "grunt build --color")))
 
-(defun core-test ()
-  "Test function"
+(defun core-npm-tests ()
+  "Invokes grunt test task and shows output"
   (interactive)
-  (let* ((bp-open-after-error nil)
-         (bp-erase-process-buffer nil))
-    (bp-spawn "grunt test")))
+  (let* ((bp-scroll-direction -1)
+         (bp-close-after-success t))
+    (bp-spawn "npm run test --color")))

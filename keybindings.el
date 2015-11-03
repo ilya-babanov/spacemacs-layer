@@ -19,14 +19,15 @@
 (define-key global-map "\C-ca" 'org-agenda)
 
 (evil-leader/set-key-for-mode 'js2-mode
-  "mgt" 'core-grunt-tests
-  "mgb" 'core-grunt-build
-  "mnt" 'core-npm-tests
   "mdf" 'js-doc-insert-function-doc
   "mdt" 'js-doc-insert-file-doc
   "mtr" 'tern-rename-variable)
 
 (evil-leader/set-key
+  "ob" 'bpr-open-last-buffer
+  "og" 'core-grunt-tests
+  "oG" 'core-grunt-build
+  "on" 'core-npm-tests
   "gp" 'magit-pull-popup
   "gP" 'magit-push-popup
   "cb" 'core-try-start-process

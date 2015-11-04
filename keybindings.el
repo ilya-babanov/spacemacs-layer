@@ -1,3 +1,5 @@
+(evil-set-initial-state 'shell-mode 'normal)
+
 (define-key evil-normal-state-map (kbd "C-k") (lambda ()
                                                 (interactive)
                                                 (evil-scroll-up 5)))

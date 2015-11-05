@@ -1,5 +1,3 @@
-(evil-set-initial-state 'shell-mode 'normal)
-
 (define-key evil-normal-state-map (kbd "C-k") (lambda ()
                                                 (interactive)
                                                 (evil-scroll-up 5)))
@@ -20,6 +18,8 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 
+(evil-set-initial-state 'shell-mode 'normal)
+
 (evil-leader/set-key-for-mode 'js2-mode
   "mdf" 'js-doc-insert-function-doc
   "mdt" 'js-doc-insert-file-doc
@@ -30,6 +30,7 @@
   "og" 'core-grunt-tests
   "oG" 'core-grunt-build
   "on" 'core-npm-tests
+  "oe" 'core-bpr-package-tests
   "gp" 'magit-pull-popup
   "gP" 'magit-push-popup
   "cb" 'core-try-start-process

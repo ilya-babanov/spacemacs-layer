@@ -89,3 +89,9 @@
   (interactive)
   (let* ((bpr-scroll-direction -1))
     (bpr-spawn "npm run test --color")))
+
+(defun core-bpr-package-tests ()
+  "Tests emacs-bpr package"
+  (interactive)
+  (let* ((bpr-process-directory "~/my-projects/emacs-bpr/"))
+    (bpr-spawn "emacs -batch -l ert -l ./bpr.el -l ./tests/bpr-tests.el -f ert-run-tests-batch-and-exit")))

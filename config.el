@@ -1,7 +1,7 @@
 ;; enable linum-mode and scroll-margin in programming modes
 (add-hook 'prog-mode-hook (lambda ()
                             (progn
-                              (linum-mode t)
+                              ;; (linum-mode t)
                               (my-set-scroll-margin 17))))
 
 ;; disable scroll-margin in term mode
@@ -66,6 +66,9 @@
     (setq-default shell-pop-autocd-to-working-dir nil)
     (setq-default shell-pop-window-height 65)))
 
+(eval-after-load 'neotree
+  '(progn (setq neo-vc-integration nil)))
+
 (add-to-list 'load-path "~/my-projects/emacs-bpr/")
 (require 'bpr)
 
@@ -81,8 +84,7 @@
 (defun core-grunt-build ()
   "Invokes grunt buil and shows output"
   (interactive)
-  (let* ((bpr-poll-timout 0.3))
-    (bpr-spawn "grunt build --color")))
+  (bpr-spawn "grunt build --color"))
 
 (defun core-npm-tests ()
   "Invokes grunt test task and shows output"
@@ -94,4 +96,4 @@
   "Tests emacs-bpr package"
   (interactive)
   (let* ((bpr-process-directory "~/my-projects/emacs-bpr/"))
-    (bpr-spawn "emacs -batch -l ert -l ./bpr.el -l ./tests/bpr-tests.el -f ert-run-tests-batch-and-exit")))
+    (bpr-spawn "cask exec buttercup -L .")))

@@ -7,6 +7,12 @@
 ;; disable scroll-margin in term mode
 (add-hook 'term-mode-hook (lambda () (my-set-scroll-margin 0)))
 
+(add-hook 'emacs-lisp-mode-hook (lambda () (color-identifiers-mode t)))
+
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-hook 'comint-mode-hook 'ansi-color-for-comint-mode-on)
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+
 ;; do not wrap files by default
 (setq-default truncate-lines 0)
 

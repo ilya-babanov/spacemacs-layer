@@ -16,21 +16,21 @@
 ;; do not wrap files by default
 (setq-default truncate-lines 0)
 
-;; configure org mode
-(setq org-agenda-files '("~/Yandex.Disk.localized/org"))
-(setq org-log-done t)
-(setq org-agenda-span 40)
-(setq org-agenda-start-day "-20d")
-(setq org-capture-templates
-      '(("p" "Projects" entry (file+headline "~/Yandex.Disk.localized/org/projects.org" "Tasks")
-         "** TODO %?\n  %i\n  %a")
-        ("l" "LightSide" entry (file+headline "~/Yandex.Disk.localized/org/lightside.org" "Tasks")
-         "** TODO %?\n  %i\n  %a")
-        ("h" "Home" entry (file+headline "~/Yandex.Disk.localized/org/home.org" "Tasks")
-         "** TODO %?\n  %i\n  %a")
-        ("w" "Work" entry (file+headline "~/Yandex.Disk.localized/org/work.org" "Tasks")
-         "** TODO %?\n  %i\n  %a")
-        ))
+;; configure default states for evil mode
+(setq evil-default-state 'emacs)
+(evil-set-initial-state 'magit-status-mode 'emacs)
+(add-hook 'prog-mode-hook 'core-enable-evil-normal-state)
+(add-hook 'text-mode-hook 'core-enable-evil-normal-state)
+
+(defun core-enable-evil-normal-state ()
+  (unless (member major-mode evil-normal-state-modes)
+    (message "Dynamically set evil state to 'normal for %s" (buffer-name))
+    (evil-set-initial-state major-mode 'normal)))
+
+(defun core-enable-evil-emacs-state ()
+  (unless (member major-mode evil-emacs-state-modes)
+    (message "Dynamically set evil state to 'emacs for %s" (buffer-name))
+    (evil-set-initial-state major-mode 'emacs)))
 
 ;; Makes scroll-margin var 'buffer-local' and sets variable to it
 (defun my-set-scroll-margin (param)
@@ -46,21 +46,21 @@
 (eval-after-load 'flycheck
   '(progn
      (flycheck-define-checker jsxhint-checker
-                              "A JSX syntax and style checker based on JSXHint."
-                              :command ("jsxhint" source)
-                              :error-patterns
-                              ((error line-start (1+ nonl) ": line " line ", col " column ", " (message) line-end))
-                              :modes (js-mode js2-mode js3-mode))
+       "A JSX syntax and style checker based on JSXHint."
+       :command ("jsxhint" source)
+       :error-patterns
+       ((error line-start (1+ nonl) ": line " line ", col " column ", " (message) line-end))
+       :modes (js-mode js2-mode js3-mode))
      (add-to-list 'flycheck-checkers 'jsxhint-checker)
 
      (flycheck-def-config-file-var flycheck-jscs javascript-jscs ".jscsr"
        :safe #'stringp)
      (flycheck-define-checker javascript-jscs
-                              "A jscs code style checker."
-                              :command ("jscs" "--reporter" "checkstyle" "--esnext"
-                                        (config-file "--config" flycheck-jscs) source)
-                              :error-parser flycheck-parse-checkstyle
-                              :modes (js-mode js2-mode js3-mode))
+       "A jscs code style checker."
+       :command ("jscs" "--reporter" "checkstyle" "--esnext"
+                 (config-file "--config" flycheck-jscs) source)
+       :error-parser flycheck-parse-checkstyle
+       :modes (js-mode js2-mode js3-mode))
      (add-to-list 'flycheck-checkers 'javascript-jscs)))
 
 (eval-after-load 'projectile
@@ -69,7 +69,6 @@
 
 (eval-after-load 'shell-pop
   '(progn
-    (setq-default shell-pop-autocd-to-working-dir nil)
     (setq-default shell-pop-window-height 65)))
 
 (eval-after-load 'neotree

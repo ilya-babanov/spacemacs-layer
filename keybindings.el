@@ -31,9 +31,9 @@
   "oG" 'core-grunt-build
   "on" 'core-npm-tests
   "oe" 'core-bpr-package-tests
+  "or" 'elfeed
   "gp" 'magit-pull-popup
   "gP" 'magit-push-popup
-  "cb" 'core-try-start-process
   "wn" 'eyebrowse-next-window-config)
 
 (eval-after-load 'yasnippet

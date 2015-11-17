@@ -6,6 +6,7 @@
       color-identifiers-mode
       flycheck-package
       buttercup
+      elfeed
       notmuch
       paredit))
 
@@ -44,3 +45,14 @@
     :defer t
     :config
     '(flycheck-package-setup)))
+
+(defun core/init-elfeed ()
+  (use-package elfeed
+    :defer t
+    :init
+    (progn
+      (setq elfeed-feeds
+            '("http://hnrss.org/newest?points=150"
+              "http://varlamov.ru/data/rss" blog
+              "http://javascriptweekly.com/rss" js
+              "http://planet.emacsen.org/atom.xml" emacs)))))

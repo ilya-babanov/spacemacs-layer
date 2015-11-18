@@ -19,6 +19,7 @@
 ;; configure default states for evil mode
 (setq evil-default-state 'emacs)
 (evil-set-initial-state 'magit-status-mode 'emacs)
+(evil-set-initial-state 'elfeed-show-mode 'motion)
 (add-hook 'prog-mode-hook 'core-enable-evil-normal-state)
 (add-hook 'text-mode-hook 'core-enable-evil-normal-state)
 

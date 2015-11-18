@@ -34,6 +34,7 @@
   "oe" 'core-bpr-package-tests
   "or" 'elfeed
   "om" 'notmuch
+  "oW" 'core-restart-wifi-osx
   "gp" 'magit-pull-popup
   "gP" 'magit-push-popup
   "wn" 'eyebrowse-next-window-config)

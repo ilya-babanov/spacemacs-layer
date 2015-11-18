@@ -103,3 +103,8 @@
   (interactive)
   (let* ((bpr-process-directory "~/my-projects/emacs-bpr/"))
     (bpr-spawn "cask exec buttercup -L .")))
+
+(defun core-restart-wifi-osx ()
+  "Restarts wifi on osx"
+  (interactive)
+  (bpr-spawn "networksetup -setairportpower en0 off; sleep 4; networksetup -setairportpower en0 on"))

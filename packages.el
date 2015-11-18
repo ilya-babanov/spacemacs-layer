@@ -51,8 +51,14 @@
     :defer t
     :init
     (progn
+      (setq-default elfeed-search-filter "@1-week-ago +unread ")
+      (setq url-queue-timeout 30)
       (setq elfeed-feeds
-            '("http://hnrss.org/newest?points=150"
-              "http://varlamov.ru/data/rss" blog
-              "http://javascriptweekly.com/rss" js
-              "http://planet.emacsen.org/atom.xml" emacs)))))
+            '(("http://hnrss.org/newest?points=150" hn)
+              ("http://varlamov.ru/data/rss" blog)
+              ("https://blog.yandex.ru/rss/" blog yandex)
+              ("http://javascriptweekly.com/rss" js)
+              ("http://www.smashingmagazine.com/feed/" js)
+              ("http://habrahabr.ru/rss/blogs/javascript/" js)
+              ("https://www.reddit.com/r/emacs/.rss" js)
+              ("http://planet.emacsen.org/atom.xml" emacs))))))

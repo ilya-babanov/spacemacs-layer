@@ -1,6 +1,7 @@
 (define-key evil-normal-state-map (kbd "C-k") (lambda ()
                                                 (interactive)
                                                 (evil-scroll-up 5)))
+
 (define-key evil-normal-state-map (kbd "C-j") (lambda ()
                                                 (interactive)
                                                 (evil-scroll-down 5)))
@@ -32,6 +33,7 @@
   "on" 'core-npm-tests
   "oe" 'core-bpr-package-tests
   "or" 'elfeed
+  "om" 'notmuch
   "gp" 'magit-pull-popup
   "gP" 'magit-push-popup
   "wn" 'eyebrowse-next-window-config)

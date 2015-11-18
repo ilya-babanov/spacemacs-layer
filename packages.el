@@ -59,5 +59,5 @@
               ("http://javascriptweekly.com/rss" js)
               ("http://www.smashingmagazine.com/feed/" js)
               ("http://habrahabr.ru/rss/blogs/javascript/" js)
-              ("http://www.reddit.com/r/emacs/.rss" js)
+              ("http://www.reddit.com/r/emacs/.rss" emacs)
               ("http://planet.emacsen.org/atom.xml" emacs))))))

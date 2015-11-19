@@ -70,7 +70,8 @@
 
 (eval-after-load 'shell-pop
   '(progn
-    (setq-default shell-pop-window-height 65)))
+     (setq-default shell-pop-autocd-to-working-dir nil)
+     (setq-default shell-pop-window-height 65)))
 
 (eval-after-load 'neotree
   '(progn (setq neo-vc-integration nil)))
@@ -107,4 +108,5 @@
 (defun core-restart-wifi-osx ()
   "Restarts wifi on osx"
   (interactive)
-  (bpr-spawn "networksetup -setairportpower en0 off; sleep 4; networksetup -setairportpower en0 on"))
+  (let* ((bpr-process-directory "~/"))
+      (bpr-spawn "networksetup -setairportpower en0 off; sleep 4; networksetup -setairportpower en0 on")))

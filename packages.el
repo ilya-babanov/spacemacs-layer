@@ -38,6 +38,20 @@
     :defer t
     :config
     (progn
+      (setq notmuch-hello-sections
+            '(notmuch-hello-insert-header
+              notmuch-hello-insert-saved-searches
+              notmuch-hello-insert-search
+              notmuch-hello-insert-alltags
+              notmuch-hello-insert-footer))
+      (setq notmuch-saved-searches
+            '((:name "Recent" :query "tag:inbox AND date:2015-09-09.." :key "r" :sort-order newest-first)
+              (:name "Unread" :query "tag:unread" :key "u" :sort-order newest-first)
+              (:name "Flagged" :query "tag:flagged" :key "f" :sort-order newest-first)
+              (:name "Sent" :query "tag:sent" :key "t" :sort-order newest-first)
+              (:name "Drafts" :query "tag:draft" :key "d" :sort-order newest-first)
+              (:name "All" :query "*" :key "a" :sort-order newest-first)))
+      (setq notmuch-search-oldest-first nil)
       (setq smtpmail-smtp-server "smtp.yandex.ru"))))
 
 (defun core/init-flycheck-package ()
@@ -59,5 +73,6 @@
               ("http://javascriptweekly.com/rss" js)
               ("http://www.smashingmagazine.com/feed/" js)
               ("http://habrahabr.ru/rss/blogs/javascript/" js)
+              ("http://www.theverge.com/rss/group/review/index.xml" review)
               ("http://www.reddit.com/r/emacs/.rss" emacs)
               ("http://planet.emacsen.org/atom.xml" emacs))))))

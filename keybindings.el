@@ -35,6 +35,7 @@
   "or" 'elfeed
   "om" 'notmuch
   "oW" 'core-restart-wifi-osx
+  "oM" 'core-disable-scroll-margin
   "gp" 'magit-pull-popup
   "gP" 'magit-push-popup
   "wn" 'eyebrowse-next-window-config)

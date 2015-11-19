@@ -2,10 +2,10 @@
 (add-hook 'prog-mode-hook (lambda ()
                             (progn
                               ;; (linum-mode t)
-                              (my-set-scroll-margin 17))))
+                              (core-set-scroll-margin 17))))
 
 ;; disable scroll-margin in term mode
-(add-hook 'term-mode-hook (lambda () (my-set-scroll-margin 0)))
+(add-hook 'comint-mode-hook (lambda () (core-set-scroll-margin 0)))
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (color-identifiers-mode t)))
 
@@ -20,6 +20,7 @@
 (setq evil-default-state 'emacs)
 (evil-set-initial-state 'magit-status-mode 'emacs)
 (evil-set-initial-state 'elfeed-show-mode 'motion)
+(evil-set-initial-state 'fundamental-mode 'normal)
 (add-hook 'prog-mode-hook 'core-enable-evil-normal-state)
 (add-hook 'text-mode-hook 'core-enable-evil-normal-state)
 
@@ -34,10 +35,15 @@
     (evil-set-initial-state major-mode 'emacs)))
 
 ;; Makes scroll-margin var 'buffer-local' and sets variable to it
-(defun my-set-scroll-margin (param)
+(defun core-set-scroll-margin (param)
   (progn
     (make-variable-buffer-local 'scroll-margin)
     (setq scroll-margin param)))
+
+(defun core-disable-scroll-margin ()
+  "Set scroll-margin to 0"
+  (interactive)
+  (core-set-scroll-margin 0))
 
 ;; Deletes tern process (after that, tern restarts automatically)
 (defun delete-tern-process ()

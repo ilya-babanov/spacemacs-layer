@@ -70,7 +70,6 @@
       (setq elfeed-feeds
             '(("http://hnrss.org/newest?points=150" hn)
               ("http://varlamov.ru/data/rss" blog)
-              ("http://javascriptweekly.com/rss" js)
               ("http://www.smashingmagazine.com/feed/" js)
               ("http://habrahabr.ru/rss/blogs/javascript/" js)
               ("http://www.theverge.com/rss/group/review/index.xml" review)

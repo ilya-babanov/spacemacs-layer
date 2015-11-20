@@ -1,3 +1,9 @@
+;; configure bpr package
+(add-to-list 'load-path "~/my-projects/emacs-bpr/")
+(require 'bpr)
+(setq bpr-close-after-success t)
+(setq bpr-colorize-output t)
+
 ;; enable linum-mode and scroll-margin in programming modes
 (add-hook 'prog-mode-hook (lambda ()
                             (progn
@@ -23,32 +29,6 @@
 (evil-set-initial-state 'fundamental-mode 'normal)
 (add-hook 'prog-mode-hook 'core-enable-evil-normal-state)
 (add-hook 'text-mode-hook 'core-enable-evil-normal-state)
-
-(defun core-enable-evil-normal-state ()
-  (unless (member major-mode evil-normal-state-modes)
-    (message "Dynamically set evil state to 'normal for %s" (buffer-name))
-    (evil-set-initial-state major-mode 'normal)))
-
-(defun core-enable-evil-emacs-state ()
-  (unless (member major-mode evil-emacs-state-modes)
-    (message "Dynamically set evil state to 'emacs for %s" (buffer-name))
-    (evil-set-initial-state major-mode 'emacs)))
-
-;; Makes scroll-margin var 'buffer-local' and sets variable to it
-(defun core-set-scroll-margin (param)
-  (progn
-    (make-variable-buffer-local 'scroll-margin)
-    (setq scroll-margin param)))
-
-(defun core-disable-scroll-margin ()
-  "Set scroll-margin to 0"
-  (interactive)
-  (core-set-scroll-margin 0))
-
-;; Deletes tern process (after that, tern restarts automatically)
-(defun delete-tern-process ()
-  (interactive)
-  (delete-process "Tern"))
 
 (eval-after-load 'flycheck
   '(progn
@@ -81,38 +61,3 @@
 
 (eval-after-load 'neotree
   '(progn (setq neo-vc-integration nil)))
-
-(add-to-list 'load-path "~/my-projects/emacs-bpr/")
-(require 'bpr)
-
-(setq bpr-close-after-success t)
-(setq bpr-colorize-output t)
-
-(defun core-grunt-tests ()
-  "Invokes grunt test task and shows output"
-  (interactive)
-  (let* ((bpr-scroll-direction -1))
-    (bpr-spawn "grunt test --color")))
-
-(defun core-grunt-build ()
-  "Invokes grunt buil and shows output"
-  (interactive)
-  (bpr-spawn "grunt build --color"))
-
-(defun core-npm-tests ()
-  "Invokes grunt test task and shows output"
-  (interactive)
-  (let* ((bpr-scroll-direction -1))
-    (bpr-spawn "npm run test --color")))
-
-(defun core-bpr-package-tests ()
-  "Tests emacs-bpr package"
-  (interactive)
-  (let* ((bpr-process-directory "~/my-projects/emacs-bpr/"))
-    (bpr-spawn "cask exec buttercup -L .")))
-
-(defun core-restart-wifi-osx ()
-  "Restarts wifi on osx"
-  (interactive)
-  (let* ((bpr-process-directory "~/"))
-      (bpr-spawn "networksetup -setairportpower en0 off; sleep 4; networksetup -setairportpower en0 on")))

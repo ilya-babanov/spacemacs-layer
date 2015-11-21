@@ -15,20 +15,12 @@
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (color-identifiers-mode t)))
 
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'comint-mode-hook 'ansi-color-for-comint-mode-on)
-(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 
 ;; do not wrap files by default
 (setq-default truncate-lines 0)
-
-;; configure default states for evil mode
-(setq evil-default-state 'emacs)
-(evil-set-initial-state 'magit-status-mode 'emacs)
-(evil-set-initial-state 'elfeed-show-mode 'motion)
-(evil-set-initial-state 'fundamental-mode 'normal)
-(add-hook 'prog-mode-hook 'core-enable-evil-normal-state)
-(add-hook 'text-mode-hook 'core-enable-evil-normal-state)
 
 (eval-after-load 'flycheck
   '(progn

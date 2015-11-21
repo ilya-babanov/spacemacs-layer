@@ -26,6 +26,34 @@
   "mdt" 'js-doc-insert-file-doc
   "mtr" 'tern-rename-variable)
 
+(evil-leader/set-key-for-mode 'elfeed-search-mode
+  "mo" 'elfeed-search-show-entry
+  "m+" 'elfeed-search-tag-all
+  "m-" 'elfeed-search-untag-all
+  "mG" 'elfeed-update
+  "mS" 'elfeed-search-set-filter
+  "mb" 'elfeed-search-browse-url
+  "mg" 'elfeed-search-update--force
+  "mn" 'next-line
+  "mp" 'previous-line
+  "mq" 'quit-window
+  "mr" 'elfeed-search-untag-all-unread
+  "ms" 'elfeed-search-live-filter
+  "mu" 'elfeed-search-tag-all-unread
+  "my" 'elfeed-search-yank)
+
+(evil-leader/set-key-for-mode 'elfeed-show-mode
+  "m+" 'elfeed-show-tag
+  "m-" 'elfeed-show-untag
+  "mb" 'elfeed-show-visit
+  "md" 'elfeed-show-save-enclosure
+  "mg" 'elfeed-show-refresh
+  "mn" 'elfeed-show-next
+  "mp" 'elfeed-show-prev
+  "mq" 'elfeed-kill-buffer
+  "ms" 'elfeed-show-new-live-search
+  "my" 'elfeed-show-yank)
+
 (evil-leader/set-key
   "ob" 'bpr-open-last-buffer
   "og" 'core-grunt-tests

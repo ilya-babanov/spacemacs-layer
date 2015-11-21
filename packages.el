@@ -10,7 +10,6 @@
       notmuch
       paredit))
 
-;; List of packages to exclude.
 (setq core-excluded-packages '())
 
 (defun core/init-buttercup ())
@@ -65,8 +64,10 @@
     :defer t
     :init
     (progn
-      (setq-default elfeed-search-filter "@1-week-ago +unread ")
+      (setq-default elfeed-search-filter "@4-week-ago +unread ")
       (setq url-queue-timeout 15)
+      (evil-set-initial-state 'elfeed-search-mode 'motion)
+      (evil-set-initial-state 'elfeed-show-mode 'motion)
       (setq elfeed-feeds
             '(("http://hnrss.org/newest?points=150" hn)
               ("http://varlamov.ru/data/rss" blog)

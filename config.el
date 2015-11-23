@@ -10,8 +10,9 @@
                               ;; (linum-mode t)
                               (core-set-scroll-margin 17))))
 
-;; disable scroll-margin in term mode
 (add-hook 'comint-mode-hook (lambda () (core-set-scroll-margin 0)))
+(add-hook 'term-mode-hook (lambda () (core-set-scroll-margin 0)))
+(add-hook 'shell-mode-hook (lambda () (core-set-scroll-margin 0)))
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (color-identifiers-mode t)))
 

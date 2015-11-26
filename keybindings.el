@@ -24,16 +24,17 @@
 (evil-leader/set-key-for-mode 'js2-mode
   "mdf" 'js-doc-insert-function-doc
   "mdt" 'js-doc-insert-file-doc
+  "mgb" 'tern-pop-find-definition
   "mtr" 'tern-rename-variable)
 
 (evil-leader/set-key-for-mode 'elfeed-search-mode
   "mo" 'elfeed-search-show-entry
   "m+" 'elfeed-search-tag-all
   "m-" 'elfeed-search-untag-all
-  "mG" 'elfeed-update
+  "mg" 'elfeed-update
+  "mG" 'elfeed-search-update--force
   "mS" 'elfeed-search-set-filter
   "mb" 'elfeed-search-browse-url
-  "mg" 'elfeed-search-update--force
   "mn" 'next-line
   "mp" 'previous-line
   "mq" 'quit-window

@@ -54,3 +54,44 @@
 
 (eval-after-load 'neotree
   '(progn (setq neo-vc-integration nil)))
+
+;; (shell :variables
+;;        ;; shell-default-shell 'ansi-term
+;;        shell-default-term-shell "/bin/zsh"
+;;        ;; shell-default-position 'bottom
+;;        shell-default-height 60)
+;; (haskell :variables
+;;          haskell-enable-hindent-style "johan-tibell"
+;;          haskell-enable-ghc-mod-support t)
+;; git
+;; org
+;; markdown
+;; eyebrowse
+;; spell-checking
+;; version-control
+;; auto-completion
+;; syntax-checking
+;; go
+;; elm
+;; python
+;; javascript
+;; emacs-lisp
+;; common-lisp
+;; core
+
+;; dotspacemacs-default-font '("Hack"
+;;                             :size 15
+;;                             :weight normal
+;;                             :width normal
+;;                             :powerline-scale 1)
+
+;; (defun dotspacemacs/user-config ()
+;;   "Configuration function.
+;;  This function is called at the very end of Spacemacs initialization after
+;; layers configuration."
+;;   (setq scroll-margin 17)
+;;   ;; add GOPATH environment variable
+;;   (exec-path-from-shell-initialize)
+;;   (exec-path-from-shell-copy-env "GOPATH")
+;;   (spacemacs/toggle-mode-line-minor-modes-off)
+;;   (setq powerline-default-separator nil))

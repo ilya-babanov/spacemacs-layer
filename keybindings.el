@@ -18,7 +18,6 @@
 (define-key global-map "\C-cc" 'org-capture)
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
-(define-key elm-mode-map "\C-cc" 'company-elm)
 
 (evil-set-initial-state 'shell-mode 'normal)
 
@@ -75,3 +74,6 @@
   '(progn
      (define-key yas-minor-mode-map (kbd "<tab>") 'yas-expand)
      (define-key yas-minor-mode-map (kbd "TAB") 'yas-expand)))
+
+(eval-after-load 'elm-mode
+  '(define-key elm-mode-map "\C-cc" 'company-elm))

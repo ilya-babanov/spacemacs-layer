@@ -3,7 +3,7 @@
 (setq core-packages
     '(editorconfig
       jade-mode
-      color-identifiers-mode
+      ;; color-identifiers-mode
       flycheck-package
       buttercup
       elfeed
@@ -18,7 +18,7 @@
 
 (defun core/init-jade-mode ())
 
-(defun core/init-color-identifiers-mode ())
+;; (defun core/init-color-identifiers-mode ())
 
 (defun core/init-paredit ()
   (use-package paredit

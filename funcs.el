@@ -53,3 +53,11 @@
   (interactive)
   (let* ((bpr-process-directory "~/"))
     (bpr-spawn "networksetup -setairportpower en0 off; sleep 4; networksetup -setairportpower en0 on")))
+
+(defun core-flyspell-save-word ()
+  "Saves word to flyspell current dictionary"
+  (interactive)
+  (let ((current-location (point))
+        (word (flyspell-get-word)))
+    (when (consp word)
+      (flyspell-do-correct 'save nil (car word) current-location (cadr word) (caddr word) current-location))))

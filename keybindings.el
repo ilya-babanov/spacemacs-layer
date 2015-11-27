@@ -18,6 +18,7 @@
 (define-key global-map "\C-cc" 'org-capture)
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
+(define-key elm-mode-map "\C-cc" 'company-elm)
 
 (evil-set-initial-state 'shell-mode 'normal)
 
@@ -65,6 +66,7 @@
   "om" 'notmuch
   "oW" 'core-restart-wifi-osx
   "oM" 'core-disable-scroll-margin
+  "of" 'core-flyspell-save-word
   "gp" 'magit-pull-popup
   "gP" 'magit-push-popup
   "wn" 'eyebrowse-next-window-config)

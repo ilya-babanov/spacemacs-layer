@@ -4,17 +4,10 @@
 (setq bpr-close-after-success t)
 (setq bpr-colorize-output t)
 
-;; enable linum-mode and scroll-margin in programming modes
-(add-hook 'prog-mode-hook (lambda ()
-                            (progn
-                              ;; (linum-mode t)
-                              (core-set-scroll-margin 17))))
-
 (add-hook 'comint-mode-hook (lambda () (core-set-scroll-margin 0)))
 (add-hook 'term-mode-hook (lambda () (core-set-scroll-margin 0)))
 (add-hook 'shell-mode-hook (lambda () (core-set-scroll-margin 0)))
-
-(add-hook 'emacs-lisp-mode-hook (lambda () (color-identifiers-mode t)))
+(add-hook 'prog-mode-hook (lambda () (core-set-scroll-margin 15)))
 
 (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
@@ -54,6 +47,11 @@
 
 (eval-after-load 'neotree
   '(progn (setq neo-vc-integration nil)))
+
+(eval-after-load 'flyspell
+  '(progn
+     (message "Flyspell loaded, add hook to prog-mode")
+     (add-hook 'prog-mode (lambda () (flyspell-prog-mode)))))
 
 ;; (shell :variables
 ;;        ;; shell-default-shell 'ansi-term

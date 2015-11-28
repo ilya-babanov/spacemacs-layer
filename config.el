@@ -13,8 +13,9 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'comint-mode-hook 'ansi-color-for-comint-mode-on)
 
-;; do not wrap files by default
-(setq-default truncate-lines 0)
+(setq multi-term-program "/usr/bin/screen")
+
+;; (setq-default truncate-lines 0)
 
 (eval-after-load 'flycheck
   '(progn
@@ -51,7 +52,7 @@
 (eval-after-load 'flyspell
   '(progn
      (message "Flyspell loaded, add hook to prog-mode")
-     (add-hook 'prog-mode (lambda () (flyspell-prog-mode)))))
+     (add-hook 'prog-mode-hook (lambda () (flyspell-prog-mode)))))
 
 ;; (shell :variables
 ;;        ;; shell-default-shell 'ansi-term

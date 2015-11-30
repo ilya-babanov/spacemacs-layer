@@ -1,3 +1,5 @@
+(evil-set-initial-state 'magit-status-mode 'emacs)
+
 (define-key evil-normal-state-map (kbd "C-k") (lambda ()
                                                 (interactive)
                                                 (evil-scroll-up 5)))

@@ -20,7 +20,8 @@
 
 ;; set program for spell checking
 (setq ispell-program-name "aspell")
-;; force the English dictionary, support Camel Case spelling check (tested with aspell 0.6)
+;; force the English dictionary
+;; support Camel Case spelling check
 (setq ispell-extra-args
       '("--sug-mode=ultra"
         "--lang=en_US"
@@ -49,8 +50,7 @@
      (add-to-list 'flycheck-checkers 'javascript-jscs)))
 
 (eval-after-load 'projectile
-  '(progn
-     (add-to-list 'projectile-globally-ignored-directories "node_modules")))
+  '(add-to-list 'projectile-globally-ignored-directories "node_modules"))
 
 (eval-after-load 'shell-pop
   '(progn
@@ -58,12 +58,10 @@
      (setq-default shell-pop-window-height 65)))
 
 (eval-after-load 'neotree
-  '(progn (setq neo-vc-integration nil)))
+  '(setq neo-vc-integration nil))
 
-;; (eval-after-load 'flyspell
-;;   '(progn
-;;      (message "Flyspell loaded, add hook to prog-mode")
-;;      (add-hook 'prog-mode-hook (lambda () (flyspell-prog-mode)))))
+(eval-after-load 'flyspell
+  '(add-hook 'prog-mode-hook 'flyspell-mode))
 
 ;; (shell :variables
 ;;        ;; shell-default-shell 'ansi-term

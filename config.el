@@ -8,6 +8,7 @@
 (add-hook 'term-mode-hook (lambda () (core-set-scroll-margin 0)))
 (add-hook 'shell-mode-hook (lambda () (core-set-scroll-margin 0)))
 (add-hook 'prog-mode-hook (lambda () (core-set-scroll-margin 15)))
+(add-hook 'js2-mode-hook 'subword-mode)
 
 (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
@@ -16,6 +17,16 @@
 (setq multi-term-program "/usr/bin/screen")
 
 ;; (setq-default truncate-lines 0)
+
+;; set program for spell checking
+(setq ispell-program-name "aspell")
+;; force the English dictionary, support Camel Case spelling check (tested with aspell 0.6)
+(setq ispell-extra-args
+      '("--sug-mode=ultra"
+        "--lang=en_US"
+        "--run-together"
+        "--run-together-limit=5"
+        "--run-together-min=2"))
 
 (eval-after-load 'flycheck
   '(progn
@@ -49,10 +60,10 @@
 (eval-after-load 'neotree
   '(progn (setq neo-vc-integration nil)))
 
-(eval-after-load 'flyspell
-  '(progn
-     (message "Flyspell loaded, add hook to prog-mode")
-     (add-hook 'prog-mode-hook (lambda () (flyspell-prog-mode)))))
+;; (eval-after-load 'flyspell
+;;   '(progn
+;;      (message "Flyspell loaded, add hook to prog-mode")
+;;      (add-hook 'prog-mode-hook (lambda () (flyspell-prog-mode)))))
 
 ;; (shell :variables
 ;;        ;; shell-default-shell 'ansi-term

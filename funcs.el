@@ -11,9 +11,8 @@
 
 (defun core-set-scroll-margin (param)
   "Makes scroll-margin var 'buffer-local' and sets variable to it"
-  (progn
-    (make-variable-buffer-local 'scroll-margin)
-    (setq scroll-margin param)))
+  (make-variable-buffer-local 'scroll-margin)
+  (setq scroll-margin param))
 
 (defun core-disable-scroll-margin ()
   "Set scroll-margin to 0"

@@ -16,8 +16,6 @@
 
 (setq multi-term-program "/usr/bin/screen")
 
-;; (setq-default truncate-lines 0)
-
 ;; set program for spell checking
 (setq ispell-program-name "aspell")
 ;; force the English dictionary
@@ -62,6 +60,9 @@
 
 (eval-after-load 'flyspell
   '(add-hook 'prog-mode-hook 'flyspell-mode))
+
+(eval-after-load 'yasnippet
+  '(add-to-list 'yas-snippet-dirs "~/.emacs.d/private/core/snippets"))
 
 ;; (shell :variables
 ;;        ;; shell-default-shell 'ansi-term

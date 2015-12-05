@@ -14,7 +14,7 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'comint-mode-hook 'ansi-color-for-comint-mode-on)
 
-(setq multi-term-program "/usr/bin/screen")
+(setq multi-term-program "zsh")
 
 ;; set program for spell checking
 (setq ispell-program-name "aspell")

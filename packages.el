@@ -64,7 +64,7 @@
     :defer t
     :init
     (progn
-      (setq-default elfeed-search-filter "@4-week-ago +unread ")
+      (setq-default elfeed-search-filter "@1-week-ago +unread ")
       (setq url-queue-timeout 15)
       (evil-set-initial-state 'elfeed-search-mode 'motion)
       (evil-set-initial-state 'elfeed-show-mode 'motion)
@@ -74,5 +74,7 @@
               ("http://www.smashingmagazine.com/feed/" js)
               ("http://habrahabr.ru/rss/blogs/javascript/" js)
               ("http://www.theverge.com/rss/group/review/index.xml" review)
+              ("http://elementy.ru/rss/news" science)
               ("http://www.reddit.com/r/emacs/.rss" emacs)
+              ("http://nullprogram.com/feed/" emacs)
               ("http://planet.emacsen.org/atom.xml" emacs))))))

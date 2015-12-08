@@ -60,4 +60,9 @@
         (word (flyspell-get-word)))
     (when (consp word)
       (message "Saving word '%s' to dictionary" (car word))
-      (flyspell-do-correct 'save nil (car word) current-location (cadr word) (caddr word) current-location))))
+      (flyspell-do-correct 'save nil
+                           (car word)
+                           current-location
+                           (cadr word)
+                           (caddr word)
+                           current-location))))

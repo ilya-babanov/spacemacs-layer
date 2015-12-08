@@ -1,0 +1,16 @@
+* Blogs                                             :elfeed:
+** http://varlamov.ru/data/rss                                :blogs:
+** http://feeds.feedburner.com/InformationIsBeautiful             :infographics:
+** http://xkcd.com/rss.xml             :xkcd:
+** Software Development                                 :dev:
+*** News                                                     :news:
+**** http://hnrss.org/newest?points=150
+**** http://www.smashingmagazine.com/feed/
+*** JavaScript                                               :js:
+**** http://habrahabr.ru/rss/blogs/javascript/
+*** Emacs                                                    :emacs:
+**** http://nullprogram.com/feed
+**** http://planet.emacsen.org/atom.xml
+**** http://www.reddit.com/r/emacs/.rss                           :reddit:
+** Science                                              :science:
+*** http://elementy.ru/rss/news

@@ -66,3 +66,21 @@
                            (cadr word)
                            (caddr word)
                            current-location))))
+
+(defun core-eval-line (eval-fn)
+  "Evaluates current line"
+  (save-excursion
+    (end-of-line)
+    (set-mark (line-beginning-position))
+    (call-interactively eval-fn)))
+
+(defun core-eval-region-or-line (eval-fn)
+  "Evaluates selected region or current line"
+  (if (use-region-p)
+      (call-interactively eval-fn)
+    (core-eval-line eval-fn)))
+
+(defun core-eval-py ()
+  "Evaluatetes current line as python code"
+  (interactive)
+  (core-eval-region-or-line 'python-shell-send-region))

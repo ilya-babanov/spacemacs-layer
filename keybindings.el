@@ -30,6 +30,9 @@
   "gb" 'tern-pop-find-definition
   "tr" 'tern-rename-variable)
 
+(spacemacs/set-leader-keys-for-major-mode 'python-mode
+  "," 'core-eval-py)
+
 (spacemacs/set-leader-keys
   "ob" 'bpr-open-last-buffer
   "og" 'core-grunt-tests
@@ -41,7 +44,8 @@
   "oW" 'core-restart-wifi-osx
   "oM" 'core-disable-scroll-margin
   "of" 'core-flyspell-save-word
-  "gB" 'magit-branch-popup)
+  "gB" 'magit-branch-popup
+  "hh" 'helm-semantic-or-imenu)
 
 (eval-after-load 'yasnippet
   '(progn

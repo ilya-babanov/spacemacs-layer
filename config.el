@@ -38,3 +38,8 @@
 
 (eval-after-load 'yasnippet
   '(add-to-list 'yas-snippet-dirs "~/.emacs.d/private/core/snippets"))
+
+(eval-after-load 'evil
+  '(progn
+     (setq evil-move-beyond-eol nil)
+     (setq evil-move-cursor-back nil)))

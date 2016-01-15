@@ -1,3 +1,7 @@
+
+;; fix for ein package
+(add-to-list 'load-path "~/.emacs.d/private/core/misc/")
+
 (add-to-list 'load-path "~/my-projects/emacs-bpr/")
 (require 'bpr)
 (setq bpr-close-after-success t)
@@ -43,3 +47,11 @@
   '(progn
      (setq evil-move-beyond-eol nil)
      (setq evil-move-cursor-back nil)))
+
+(eval-after-load 'ein
+  '(setq ein:use-auto-complete-superpack t))
+
+(add-hook 'ein:notebook-multilang-mode-hook
+          (lambda () (progn
+                       (auto-complete-mode 1)
+                       (smartparens-mode 1))))

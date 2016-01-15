@@ -2,7 +2,7 @@
 
 (setq core-packages
     '(editorconfig
-      jade-mode
+      ;; jade-mode
       flycheck-package
       buttercup
       realgud))
@@ -13,7 +13,7 @@
 
 (defun core/init-editorconfig ())
 
-(defun core/init-jade-mode ())
+;; (defun core/init-jade-mode ())
 
 (defun core/init-realgud ()
   (use-package realgud

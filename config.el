@@ -49,9 +49,31 @@
      (setq evil-move-cursor-back nil)))
 
 (eval-after-load 'ein
-  '(setq ein:use-auto-complete-superpack t))
+  '(progn
+     (setq ein:use-auto-complete-superpack t)
+     (add-hook 'ein:notebook-multilang-mode-hook
+               (lambda () (progn
+                            (auto-complete-mode 1)
+                            (smartparens-mode 1))))))
 
-(add-hook 'ein:notebook-multilang-mode-hook
-          (lambda () (progn
-                       (auto-complete-mode 1)
-                       (smartparens-mode 1))))
+(with-eval-after-load 'org
+  (setq org-agenda-files '("~/Yandex.Disk.localized/org/organizer.org"))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((js . t)
+     (python . t)
+     (css . t)
+     (shell . t)))
+  (setq org-capture-templates
+        '(("t" "Tasks" entry
+           (file+headline "~/Yandex.Disk.localized/org/organizer.org" "Tasks")
+           "* TODO %?\n%i\n%a\n%T\n")
+          ("n" "Notes" entry
+           (file+headline "~/Yandex.Disk.localized/org/organizer.org" "Notes")
+           "* NOTE %?\n%i\n%a\n%T\n")
+          ("w" "Work Tasks" entry
+           (file+headline "~/Yandex.Disk.localized/org/organizer.org" "Work Tasks")
+           "* TODO %?\n%i\n%a\n%T\n")
+          ("N" "Work Notes" entry
+           (file+headline "~/Yandex.Disk.localized/org/organizer.org" "Work Notes")
+           "* NOTE %?\n%i\n%a\n%T\n"))))

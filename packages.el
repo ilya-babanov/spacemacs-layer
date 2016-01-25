@@ -2,7 +2,6 @@
 
 (setq core-packages
     '(editorconfig
-      ;; jade-mode
       flycheck-package
       buttercup
       realgud))
@@ -13,8 +12,6 @@
 
 (defun core/init-editorconfig ())
 
-;; (defun core/init-jade-mode ())
-
 (defun core/init-realgud ()
   (use-package realgud
     :defer t))
@@ -23,4 +20,4 @@
   (use-package flycheck-package
     :defer t
     :config
-    '(flycheck-package-setup)))
+    (flycheck-package-setup)))

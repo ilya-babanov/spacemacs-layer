@@ -2,11 +2,6 @@
 ;; fix for ein package
 (add-to-list 'load-path "~/.emacs.d/private/core/misc/")
 
-(add-to-list 'load-path "~/my-projects/emacs-bpr/")
-(require 'bpr)
-(setq bpr-close-after-success t)
-(setq bpr-colorize-output t)
-
 (add-hook 'comint-mode-hook (lambda () (core-set-scroll-margin 0)))
 (add-hook 'term-mode-hook (lambda () (core-set-scroll-margin 0)))
 (add-hook 'shell-mode-hook (lambda () (core-set-scroll-margin 0)))

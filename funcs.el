@@ -30,6 +30,13 @@
   (let* ((bpr-scroll-direction -1))
     (bpr-spawn "grunt test --color")))
 
+(defun core-grunt-tests-nano ()
+  "Invokes grunt test task and shows output"
+  (interactive)
+  (let* ((bpr-scroll-direction -1)
+         (bpr-process-directory "~/projects/chrome-nano/"))
+    (bpr-spawn "grunt test-nano --color")))
+
 (defun core-grunt-build ()
   "Invokes grunt buil and shows output"
   (interactive)

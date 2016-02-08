@@ -35,9 +35,10 @@
 
 (spacemacs/set-leader-keys
   "ob" 'bpr-open-last-buffer
-  "og" 'core-grunt-tests
   "oG" 'core-grunt-build
+  "og" 'core-grunt-tests
   "on" 'core-npm-tests
+  "oN" 'core-grunt-tests-nano
   "oe" 'core-bpr-package-tests
   "or" 'elfeed
   "om" 'notmuch

@@ -26,7 +26,7 @@
 
 (eval-after-load 'shell-pop
   '(progn
-     (setq-default shell-pop-autocd-to-working-dir nil)
+     (setq-default shell-pop-autocd-to-working-dir t)
      (setq-default shell-pop-window-height 65)))
 
 (eval-after-load 'neotree

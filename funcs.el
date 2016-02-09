@@ -74,6 +74,25 @@
                            (caddr word)
                            current-location))))
 
+(defvar core-shell-pop-project-root nil
+  "Project root for shell-pop")
+
+(defvar core-shell-pop-prev-project-root nil
+  "Previous project root for shell-pop")
+
+(defun core-shell-pop-save-project-root ()
+  "Saves project root to global variable"
+  (setq core-shell-pop-prev-project-root core-shell-pop-project-root)
+  (setq core-shell-pop-project-root (projectile-project-root)))
+
+(defun core-shell-pop-cd-project ()
+  "cd to project root"
+  (when (and (not (null core-shell-pop-project-root))
+             (not (string=
+                   core-shell-pop-prev-project-root
+                   core-shell-pop-project-root)))
+    (shell-pop--cd-to-cwd core-shell-pop-project-root)))
+
 (defun core-eval-line (eval-region)
   "Evaluates current line"
   (save-excursion

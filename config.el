@@ -24,11 +24,6 @@
 (eval-after-load 'projectile
   '(add-to-list 'projectile-globally-ignored-directories "node_modules"))
 
-(eval-after-load 'shell-pop
-  '(progn
-     (setq-default shell-pop-autocd-to-working-dir t)
-     (setq-default shell-pop-window-height 65)))
-
 (eval-after-load 'neotree
   '(setq neo-vc-integration nil))
 
@@ -50,6 +45,12 @@
                (lambda () (progn
                             (auto-complete-mode 1)
                             (smartparens-mode 1))))))
+
+(with-eval-after-load 'shell-pop
+  (setq-default shell-pop-autocd-to-working-dir nil)
+  (setq-default shell-pop-window-height 65)
+  (add-hook 'shell-pop-in-hook 'core-shell-pop-save-project-root)
+  (add-hook 'shell-pop-in-after-hook 'core-shell-pop-cd-project))
 
 (with-eval-after-load 'org
   (setq org-agenda-files '("~/Yandex.Disk.localized/org/organizer.org"))

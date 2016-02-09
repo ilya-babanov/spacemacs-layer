@@ -83,7 +83,10 @@
 (defun core-shell-pop-save-project-root ()
   "Saves project root to global variable"
   (setq core-shell-pop-prev-project-root core-shell-pop-project-root)
-  (setq core-shell-pop-project-root (projectile-project-root)))
+  (setq core-shell-pop-project-root
+        (condition-case nil
+            (projectile-project-root)
+          (error nil))))
 
 (defun core-shell-pop-cd-project ()
   "cd to project root"

@@ -5,12 +5,13 @@
 (add-hook 'comint-mode-hook (lambda () (core-set-scroll-margin 0)))
 (add-hook 'term-mode-hook (lambda () (core-set-scroll-margin 0)))
 (add-hook 'shell-mode-hook (lambda () (core-set-scroll-margin 0)))
+(add-hook 'prog-mode-hook (lambda () (core-set-scroll-margin 15)))
 
 (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'comint-mode-hook 'ansi-color-for-comint-mode-on)
 
-(setq multi-term-program "zsh")
+(setq multi-term-program "/usr/local/bin/zsh")
 
 (setq ispell-program-name "aspell")
 (setq ispell-extra-args

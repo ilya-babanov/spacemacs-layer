@@ -2,12 +2,16 @@
 
 (setq core-packages
     '(editorconfig
+      flycheck
       flycheck-package
       buttercup
       realgud
+      helm-dash
       (bpr :location local)))
 
 (setq core-excluded-packages '())
+
+(defun core/init-helm-dash ())
 
 (defun core/init-buttercup ())
 
@@ -16,6 +20,10 @@
 (defun core/init-realgud ()
   (use-package realgud
     :defer t))
+
+(defun core/post-init-flycheck ()
+  (dolist (mode '(markdown-mode git-commit-mode text-mode org-mode))
+    (spacemacs/add-flycheck-hook mode)))
 
 (defun core/init-flycheck-package ()
   (use-package flycheck-package

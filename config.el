@@ -1,11 +1,10 @@
-
 ;; fix for ein package
 (add-to-list 'load-path "~/.emacs.d/private/core/misc/")
 
 (add-hook 'comint-mode-hook (lambda () (core-set-scroll-margin 0)))
 (add-hook 'term-mode-hook (lambda () (core-set-scroll-margin 0)))
 (add-hook 'shell-mode-hook (lambda () (core-set-scroll-margin 0)))
-(add-hook 'prog-mode-hook (lambda () (core-set-scroll-margin 15)))
+;; (add-hook 'prog-mode-hook (lambda () (core-set-scroll-margin 15)))
 
 (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
@@ -21,30 +20,42 @@
         "--run-together-limit=5"
         "--run-together-min=2"))
 
-(eval-after-load 'projectile
-  '(add-to-list 'projectile-globally-ignored-directories "node_modules"))
+(with-eval-after-load 'projectile
+  (add-to-list 'projectile-globally-ignored-directories "node_modules"))
 
-(eval-after-load 'neotree
-  '(setq neo-vc-integration nil))
+(with-eval-after-load 'neotree
+  (setq neo-vc-integration nil))
 
-(eval-after-load 'flyspell
-  '(add-hook 'prog-mode-hook 'flyspell-mode))
+(with-eval-after-load 'flyspell
+  (add-hook 'prog-mode-hook 'flyspell-mode))
 
-(eval-after-load 'yasnippet
-  '(add-to-list 'yas-snippet-dirs "~/.emacs.d/private/core/snippets"))
+(with-eval-after-load 'yasnippet
+  (add-to-list 'yas-snippet-dirs "~/.emacs.d/private/core/snippets"))
 
-(eval-after-load 'evil
-  '(progn
-     (setq evil-move-beyond-eol nil)
-     (setq evil-move-cursor-back nil)))
+(with-eval-after-load 'evil
+  (setq evil-move-beyond-eol nil)
+  (setq evil-move-cursor-back nil))
 
-(eval-after-load 'ein
-  '(progn
-     (setq ein:use-auto-complete-superpack t)
-     (add-hook 'ein:notebook-multilang-mode-hook
-               (lambda () (progn
-                            (auto-complete-mode 1)
-                            (smartparens-mode 1))))))
+(with-eval-after-load 'ein
+  (setq ein:use-auto-complete-superpack t)
+  (add-hook
+   'ein:notebook-multilang-mode-hook
+   (lambda ()
+     (auto-complete-mode 1)
+     (smartparens-mode 1))))
+
+(with-eval-after-load 'flycheck
+  (flycheck-define-checker proselint
+    "A linter for prose."
+    :command ("proselint" source-inplace)
+    :error-patterns
+    ((warning line-start (file-name) ":" line ":" column ": "
+              (id (one-or-more (not (any " "))))
+              (message (one-or-more not-newline)
+                       (zero-or-more "\n" (any " ") (one-or-more not-newline)))
+              line-end))
+    :modes (text-mode markdown-mode gfm-mode git-commit-mode org-mode))
+  (add-to-list 'flycheck-checkers 'proselint))
 
 (with-eval-after-load 'shell-pop
   (setq-default shell-pop-autocd-to-working-dir nil)

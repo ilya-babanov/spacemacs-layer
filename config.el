@@ -1,10 +1,16 @@
 ;; fix for ein package
 (add-to-list 'load-path "~/.emacs.d/private/core/misc/")
 
+(setq truncate-lines nil)
+
+(setq scroll-step 1)
+(setq scroll-conservatively 10000)
+(setq auto-window-vscroll nil)
+
 (add-hook 'comint-mode-hook (lambda () (core-set-scroll-margin 0)))
 (add-hook 'term-mode-hook (lambda () (core-set-scroll-margin 0)))
 (add-hook 'shell-mode-hook (lambda () (core-set-scroll-margin 0)))
-;; (add-hook 'prog-mode-hook (lambda () (core-set-scroll-margin 15)))
+(add-hook 'prog-mode-hook (lambda () (core-set-scroll-margin 15)))
 
 (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
@@ -19,6 +25,11 @@
         "--run-together"
         "--run-together-limit=5"
         "--run-together-min=2"))
+
+(with-eval-after-load 'exec-path-from-shell
+  (setq exec-path-from-shell-arguments '())
+  (setq exec-path-from-shell-variables '("PATH" "GOPATH" "LANG"))
+  (exec-path-from-shell-initialize))
 
 (with-eval-after-load 'projectile
   (add-to-list 'projectile-globally-ignored-directories "node_modules"))

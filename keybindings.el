@@ -3,22 +3,18 @@
 (evil-set-initial-state 'shell-mode 'normal)
 
 (define-key evil-normal-state-map
-  (kbd "C-k")
-  (lambda ()
-    (interactive)
-    (evil-scroll-up 5)))
+  "\C-k"
+  (lambda () (interactive) (evil-scroll-up 5)))
 
 (define-key evil-normal-state-map
-  (kbd "C-j")
-  (lambda ()
-    (interactive)
-    (evil-scroll-down 5)))
+  "\C-j"
+  (lambda () (interactive) (evil-scroll-down 5)))
 
 (define-key evil-normal-state-map "§" 'helm-mini)
 (define-key evil-normal-state-map "!" 'evil-search-highlight-persist-remove-all)
 
-(global-set-key (kbd "M-§") 'helm-mini)
-(global-set-key (kbd "<f4>") 'shell-pop-ansi-term)
+(define-key global-map (kbd "M-§") 'helm-mini)
+(define-key global-map (kbd "<f4>") 'shell-pop-ansi-term)
 
 (define-key global-map "\C-cc" 'org-capture)
 (define-key global-map "\C-cl" 'org-store-link)
@@ -48,10 +44,9 @@
   "gB" 'magit-branch-popup
   "hh" 'helm-semantic-or-imenu)
 
-(eval-after-load 'yasnippet
-  '(progn
-     (define-key yas-minor-mode-map (kbd "<tab>") 'yas-expand)
-     (define-key yas-minor-mode-map (kbd "TAB") 'yas-expand)))
+(with-eval-after-load 'yasnippet
+  (define-key yas-minor-mode-map (kbd "<tab>") 'yas-expand)
+  (define-key yas-minor-mode-map (kbd "TAB") 'yas-expand))
 
-(eval-after-load 'elm-mode
-  '(define-key elm-mode-map "\C-cc" 'company-elm))
+(with-eval-after-load 'elm-mode
+  (define-key elm-mode-map "\C-cc" 'company-elm))

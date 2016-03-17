@@ -1,7 +1,3 @@
-(evil-set-initial-state 'magit-status-mode 'emacs)
-(evil-set-initial-state 'elfeed-search-mode 'emacs)
-(evil-set-initial-state 'shell-mode 'normal)
-
 (define-key evil-normal-state-map
   "\C-k"
   (lambda () (interactive) (evil-scroll-up 5)))

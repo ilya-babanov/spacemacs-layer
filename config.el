@@ -1,16 +1,19 @@
 ;; fix for ein package
 (add-to-list 'load-path "~/.emacs.d/private/core/misc/")
 
-(setq truncate-lines nil)
-
 (setq scroll-step 1)
-(setq scroll-conservatively 10000)
 (setq auto-window-vscroll nil)
+(setq scroll-conservatively 10000)
 
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+(setq mouse-wheel-progressive-speed nil)
+
+(add-hook 'prog-mode-hook (lambda () (core-set-scroll-margin 8)))
+(add-hook 'text-mode-hook (lambda () (core-set-scroll-margin 8)))
+(add-hook 'org-mode-hook (lambda () (core-set-scroll-margin 8)))
 (add-hook 'comint-mode-hook (lambda () (core-set-scroll-margin 0)))
 (add-hook 'term-mode-hook (lambda () (core-set-scroll-margin 0)))
 (add-hook 'shell-mode-hook (lambda () (core-set-scroll-margin 0)))
-(add-hook 'prog-mode-hook (lambda () (core-set-scroll-margin 15)))
 
 (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
@@ -25,6 +28,9 @@
         "--run-together"
         "--run-together-limit=5"
         "--run-together-min=2"))
+
+(with-eval-after-load 'js2-mode
+  (setq js2-strict-trailing-comma-warning nil))
 
 (with-eval-after-load 'exec-path-from-shell
   (setq exec-path-from-shell-arguments '())
@@ -44,6 +50,7 @@
   (add-to-list 'yas-snippet-dirs "~/.emacs.d/private/core/snippets"))
 
 (with-eval-after-load 'evil
+  (evil-set-initial-state 'shell-mode 'normal)
   (setq evil-move-beyond-eol nil)
   (setq evil-move-cursor-back nil))
 
@@ -91,7 +98,4 @@
            "* NOTE %?\n%i\n%a\n%T\n")
           ("w" "Work Tasks" entry
            (file+headline "~/Yandex.Disk.localized/org/organizer.org" "Work Tasks")
-           "* TODO %?\n%i\n%a\n%T\n")
-          ("N" "Work Notes" entry
-           (file+headline "~/Yandex.Disk.localized/org/organizer.org" "Work Notes")
-           "* NOTE %?\n%i\n%a\n%T\n"))))
+           "* TODO %?\n%i\n%a\n%T\n"))))

@@ -30,7 +30,9 @@
         "--run-together-min=2"))
 
 (with-eval-after-load 'js2-mode
-  (setq js2-strict-trailing-comma-warning nil))
+  (setq js2-strict-trailing-comma-warning nil)
+  (setq js2-bounce-indent-p t)
+  (setq js2-include-node-externs t))
 
 (with-eval-after-load 'exec-path-from-shell
   (setq exec-path-from-shell-arguments '())

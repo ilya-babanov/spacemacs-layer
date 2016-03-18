@@ -16,6 +16,8 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 
+(define-key global-map (kbd "C-<tab>") 'js2-indent-bounce)
+
 (spacemacs/set-leader-keys-for-major-mode 'js2-mode
   "df" 'js-doc-insert-function-doc
   "dt" 'js-doc-insert-file-doc

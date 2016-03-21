@@ -30,9 +30,13 @@
         "--run-together-min=2"))
 
 (with-eval-after-load 'js2-mode
+  (load-file "./js-indent.el")
+  (setq js-curly-indent-offset 1)
   (setq js2-strict-trailing-comma-warning nil)
   (setq js2-bounce-indent-p t)
   (setq js2-include-node-externs t))
+
+;; (fset js--continued-expression-p (lambda () nil))
 
 (with-eval-after-load 'exec-path-from-shell
   (setq exec-path-from-shell-arguments '())

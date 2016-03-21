@@ -30,7 +30,7 @@
         "--run-together-min=2"))
 
 (with-eval-after-load 'js2-mode
-  (load-file "./js-indent.el")
+  (load-file "~/.emacs.d/private/core/js-indent.el")
   (setq js-curly-indent-offset 1)
   (setq js2-strict-trailing-comma-warning nil)
   (setq js2-bounce-indent-p t)

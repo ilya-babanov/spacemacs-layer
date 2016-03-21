@@ -16,8 +16,6 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 
-(define-key global-map (kbd "C-<tab>") 'js2-indent-bounce)
-
 (spacemacs/set-leader-keys-for-major-mode 'js2-mode
   "df" 'js-doc-insert-function-doc
   "dt" 'js-doc-insert-file-doc
@@ -41,6 +39,9 @@
   "of" 'core-flyspell-save-word
   "gB" 'magit-branch-popup
   "hh" 'helm-semantic-or-imenu)
+
+(with-eval-after-load 'js2-mode
+  (define-key js2-mode-map (kbd "<tab>") 'js2-indent-bounce))
 
 (with-eval-after-load 'yasnippet
   (define-key yas-minor-mode-map (kbd "<tab>") 'yas-expand)

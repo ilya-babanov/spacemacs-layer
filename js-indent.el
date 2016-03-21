@@ -3,11 +3,10 @@
   "Return the proper indentation for the current line."
   (save-excursion
     (back-to-indentation)
-    (let* ((ctrl-stmt-indent (js2-ctrl-statement-indentation))
-           (at-closing-bracket (looking-at "[]})]"))
+    (let* ((at-closing-bracket (looking-at "[]})]"))
            (same-indent-p (or at-closing-bracket
-                              (looking-at "\\<case\\>[^:]")
-                              (and (looking-at "\\<default:")
+                              (looking-at "\\_<case\\_>[^:]")
+                              (and (looking-at "\\_<default:")
                                    (save-excursion
                                      (js2-backward-sws)
                                      (not (memq (char-before) '(?, ?{)))))))
@@ -27,7 +26,7 @@
                            (point-at-bol)))) ; at or after first loop?
         (js2-array-comp-indentation parse-status beg))
 
-       (ctrl-stmt-indent)
+       ((js2-ctrl-statement-indentation))
 
        ((and declaration-indent continued-expr-p)
         (+ declaration-indent js2-basic-offset))
@@ -38,13 +37,11 @@
         (goto-char bracket)
         (cond
          ((looking-at "[({[][ \t]*\\(/[/*]\\|$\\)")
-          (when (save-excursion (skip-chars-backward " \t)")
+          (when (save-excursion (skip-chars-backward " \t\n)")
                                 (looking-at ")"))
             (backward-list))
           (back-to-indentation)
-          (and (eq js2-pretty-multiline-declarations 'all)
-               (looking-at js2-declaration-keyword-re)
-               (goto-char (1+ (match-end 0))))
+          (js2-maybe-goto-declaration-keyword-end bracket)
           (setq indent
                 (cond (same-indent-p
                        (current-column))

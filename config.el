@@ -36,8 +36,6 @@
   (setq js2-bounce-indent-p t)
   (setq js2-include-node-externs t))
 
-;; (fset js--continued-expression-p (lambda () nil))
-
 (with-eval-after-load 'exec-path-from-shell
   (setq exec-path-from-shell-arguments '())
   (setq exec-path-from-shell-variables '("PATH" "GOPATH" "LANG"))

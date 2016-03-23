@@ -1,5 +1,5 @@
 ;; fix for ein package
-(add-to-list 'load-path "~/.emacs.d/private/core/misc/")
+;; (add-to-list 'load-path "~/.emacs.d/private/core/misc/")
 
 (setq scroll-step 1)
 (setq auto-window-vscroll nil)

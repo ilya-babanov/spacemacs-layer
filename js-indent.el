@@ -66,9 +66,8 @@
                 (if at-closing-bracket
                     (back-to-indentation))
                 (current-column))
-            (progn
-              (back-to-indentation)
-              (+ (current-column) js2-basic-offset))))))
+            (back-to-indentation)
+            (+ (current-column) js2-basic-offset)))))
 
        (continued-expr-p js2-basic-offset)
 

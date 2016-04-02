@@ -49,6 +49,7 @@ values."
      javascript
      python
      ipython-notebook
+     shell-scripts
      scheme
      racket
      clojure

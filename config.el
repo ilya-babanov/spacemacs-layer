@@ -86,6 +86,7 @@
 
 (with-eval-after-load 'org
   (setq org-agenda-files '("~/Yandex.Disk.localized/org/organizer.org"))
+  (setq org-startup-indented t)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((js . t)

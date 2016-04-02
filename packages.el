@@ -35,8 +35,8 @@
   (use-package bpr
     :defer t
     :init
-    (autoload 'bpr-spawn "~/my-projects/emacs-bpr/bpr.el")
-    (autoload 'bpr-open-last-buffer "~/my-projects/emacs-bpr/bpr.el")
+    (autoload 'bpr-spawn "~/projects/emacs-bpr/bpr.el")
+    (autoload 'bpr-open-last-buffer "~/projects/emacs-bpr/bpr.el")
     :config
     (setq bpr-close-after-success t)
     (setq bpr-colorize-output t)))

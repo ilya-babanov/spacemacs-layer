@@ -216,7 +216,7 @@ values."
    dotspacemacs-loading-progress-bar nil
    ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup t
+   dotspacemacs-fullscreen-at-startup nil
    ;; If non nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
    dotspacemacs-fullscreen-use-non-native nil
@@ -286,6 +286,7 @@ in `dotspacemacs/user-config'.")
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+  (editorconfig-mode 1)
   (spacemacs/toggle-mode-line-minor-modes-off)
   (spacemacs/toggle-visual-line-navigation-on)
   (setq powerline-default-separator nil))

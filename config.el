@@ -29,9 +29,14 @@
         "--run-together-limit=5"
         "--run-together-min=2"))
 
+(with-eval-after-load 'projectile
+  (dolist (dir '("build.debug" "build.DEBUG" "build.host" "build.HOST"))
+    (add-to-list 'projectile-globally-ignored-directories dir)))
+
 (with-eval-after-load 'js2-mode
   (load-file "~/.emacs.d/private/core/js-indent.el")
   (setq js-curly-indent-offset 1)
+  (setq js2-strict-inconsistent-return-warning nil)
   (setq js2-strict-trailing-comma-warning nil)
   (setq js2-bounce-indent-p t)
   (setq js2-include-node-externs t))
@@ -85,8 +90,9 @@
   (add-hook 'shell-pop-in-after-hook 'core-shell-pop-cd-project))
 
 (with-eval-after-load 'org
-  (setq org-agenda-files '("~/Yandex.Disk.localized/org/organizer.org"))
+  (setq org-agenda-files '("~/my/org/organizer.org"))
   (setq org-startup-indented t)
+  (setq org-tags-column -110)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((js . t)
@@ -95,11 +101,11 @@
      (shell . t)))
   (setq org-capture-templates
         '(("t" "Tasks" entry
-           (file+headline "~/Yandex.Disk.localized/org/organizer.org" "Tasks")
+           (file+headline "~/my/org/organizer.org" "Tasks")
            "* TODO %?\n%i\n%a\n%T\n")
           ("n" "Notes" entry
-           (file+headline "~/Yandex.Disk.localized/org/organizer.org" "Notes")
-           "* NOTE %?\n%i\n%a\n%T\n")
+           (file+headline "~/my/org/organizer.org" "Notes")
+           "* %?\n%i\n")
           ("w" "Work Tasks" entry
-           (file+headline "~/Yandex.Disk.localized/org/organizer.org" "Work Tasks")
+           (file+headline "~/my/org/organizer.org" "Work Tasks")
            "* TODO %?\n%i\n%a\n%T\n"))))

@@ -7,6 +7,7 @@
   (lambda () (interactive) (evil-scroll-down 5)))
 
 (define-key evil-normal-state-map "§" 'helm-mini)
+(define-key evil-normal-state-map "`" 'helm-mini)
 (define-key evil-normal-state-map "!" 'evil-search-highlight-persist-remove-all)
 
 (define-key global-map (kbd "M-§") 'helm-mini)

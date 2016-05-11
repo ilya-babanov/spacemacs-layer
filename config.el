@@ -19,7 +19,7 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'comint-mode-hook 'ansi-color-for-comint-mode-on)
 
-(setq multi-term-program "/usr/local/bin/zsh")
+(setq multi-term-program "bash")
 
 (setq ispell-program-name "aspell")
 (setq ispell-extra-args
@@ -71,17 +71,11 @@
      (smartparens-mode 1))))
 
 (with-eval-after-load 'flycheck
-  (flycheck-define-checker proselint
-    "A linter for prose."
-    :command ("proselint" source-inplace)
-    :error-patterns
-    ((warning line-start (file-name) ":" line ":" column ": "
-              (id (one-or-more (not (any " "))))
-              (message (one-or-more not-newline)
-                       (zero-or-more "\n" (any " ") (one-or-more not-newline)))
-              line-end))
-    :modes (text-mode markdown-mode gfm-mode git-commit-mode org-mode))
-  (add-to-list 'flycheck-checkers 'proselint))
+  (add-hook
+   'js2-mode-hook
+   (lambda ()
+     (setq flycheck-highlighting-mode 'lines)
+     (setq flycheck-check-syntax-automatically '(save mode-enabled)))))
 
 (with-eval-after-load 'shell-pop
   (setq-default shell-pop-autocd-to-working-dir nil)
@@ -109,3 +103,48 @@
           ("w" "Work Tasks" entry
            (file+headline "~/my/org/organizer.org" "Work Tasks")
            "* TODO %?\n%i\n%a\n%T\n"))))
+
+(with-eval-after-load 'gnus
+  ;; (gnus-add-configuration
+  ;;  '(article (vertical 1.0 (summary .35 point) (article 1.0))))
+  ;; Group buffer on the left, summary buffer top-right, article buffer bottom-right:
+  (gnus-add-configuration
+   '(article
+     (horizontal 1.0
+                 (vertical 25 (group 1.0))
+                 (vertical 1.0 (summary 0.25 point) (article 1.0)))))
+  (gnus-add-configuration
+   '(summary
+     (horizontal 1.0
+                 (vertical 25 (group 1.0))
+                 (vertical 1.0 (summary 1.0 point)))))
+  (setq user-mail-address "ilya.babanov@gmail.com")
+  (setq user-full-name "Ilia Babanov")
+  ;; Get email, and store in nnml
+  (setq gnus-secondary-select-methods
+        '((nnimap "gmail"
+                  (nnimap-address "imap.gmail.com")
+                  (nnimap-server-port 993)
+                  (nnimap-stream ssl))))
+  ;; Make Gnus NOT ignore [Gmail] mailboxes
+  (setq gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
+  ;; Subscribe
+  ;; (dolist (folder '("nnimap+gmail:INBOX" "nnimap+gmail:[Gmail]/All Mail"
+  ;;                   "nnimap+gmail:[Gmail]/Drafts" "nnimap+gmail:GitHub"
+  ;;                   "nnimap+gmail:[Gmail]/Sent Mail" "nnimap+gmail:[Gmail]/Spam"
+  ;;                   "nnimap+gmail:[Gmail]/Trash"))
+  ;;   (gnus-subscribe-hierarchically folder))
+  ;; Send email via Gmail:
+  (setq message-send-mail-function 'smtpmail-send-it
+        smtpmail-default-smtp-server "smtp.gmail.com")
+  ;; Archive outgoing email in Sent folder on imap.gmail.com:
+  (setq gnus-message-archive-method '(nnimap "imap.gmail.com")
+        gnus-message-archive-group "[Gmail]/Sent Mail")
+  ;; set return email address based on incoming email address
+  (setq gnus-posting-styles
+        '((".*@hola.org"
+           (address "ilia@hola.org")
+           (signature "Ilia"))))
+  ;; store email in ~/gmail directory
+  (setq nnml-directory "~/.mail/gmail")
+  (setq message-directory "~/.mail/gmail"))

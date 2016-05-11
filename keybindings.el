@@ -6,12 +6,12 @@
   "\C-j"
   (lambda () (interactive) (evil-scroll-down 5)))
 
+(define-key evil-normal-state-map "<" 'helm-mini)
 (define-key evil-normal-state-map "§" 'helm-mini)
 (define-key evil-normal-state-map "`" 'helm-mini)
 (define-key evil-normal-state-map "!" 'evil-search-highlight-persist-remove-all)
-
 (define-key global-map (kbd "M-§") 'helm-mini)
-(define-key global-map (kbd "<f4>") 'shell-pop-ansi-term)
+(define-key global-map (kbd "<f4>") 'spacemacs/default-pop-shell)
 
 (define-key global-map "\C-cc" 'org-capture)
 (define-key global-map "\C-cl" 'org-store-link)
@@ -28,10 +28,8 @@
 
 (spacemacs/set-leader-keys
   "ob" 'bpr-open-last-buffer
-  "oG" 'core-grunt-build
-  "og" 'core-grunt-tests
-  "on" 'core-npm-tests
-  "oN" 'core-grunt-tests-nano
+  "oj" 'core-bpr-jmake-cm-release
+  "oz" 'core-bpr-jmake-and-zlxc
   "oe" 'core-bpr-package-tests
   "or" 'elfeed
   "om" 'notmuch

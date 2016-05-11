@@ -37,10 +37,12 @@ values."
 
      (shell
       :variables
-      shell-default-term-shell "/usr/local/bin/zsh"
+      shell-default-term-shell "bash"
       shell-default-height 60)
 
      org
+
+     gnus
 
      go
      csv
@@ -288,8 +290,7 @@ This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (editorconfig-mode 1)
   (spacemacs/toggle-mode-line-minor-modes-off)
-  (spacemacs/toggle-visual-line-navigation-on)
-  (setq powerline-default-separator nil))
+  (spacemacs/toggle-visual-line-navigation-on))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.

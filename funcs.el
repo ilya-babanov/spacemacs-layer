@@ -24,29 +24,17 @@
   (interactive)
   (delete-process "Tern"))
 
-(defun core-grunt-tests ()
-  "Invokes grunt test task and shows output"
-  (interactive)
-  (let* ((bpr-scroll-direction -1))
-    (bpr-spawn "grunt test --color")))
+(defvar z-env-export "export DIST=APP, DEBUG=y, BUILD=debug; ")
 
-(defun core-grunt-tests-nano ()
-  "Invokes grunt test task and shows output"
+(defun core-bpr-jmake-cm-release ()
+  "Run jmake cm release"
   (interactive)
-  (let* ((bpr-scroll-direction -1)
-         (bpr-process-directory "~/projects/chrome-nano/"))
-    (bpr-spawn "grunt test-nano --color")))
+  (bpr-spawn (concat z-env-export "jmake cm release")))
 
-(defun core-grunt-build ()
-  "Invokes grunt buil and shows output"
-  (interactive)
-  (bpr-spawn "grunt build --color"))
-
-(defun core-npm-tests ()
-  "Invokes grunt test task and shows output"
-  (interactive)
-  (let* ((bpr-scroll-direction -1))
-    (bpr-spawn "npm run test --color")))
+(defun core-bpr-jmake-and-zlxc (group)
+  "Run jmake cm release"
+  (interactive "sZLXC run arguments:")
+  (bpr-spawn (concat z-env-export "jmake cm release && zlxc run " group)))
 
 (defun core-bpr-package-tests ()
   "Tests emacs-bpr package"

@@ -134,10 +134,8 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(spacemacs-light
-                         solarized-light
-                         spacemacs-dark
-                         solarized-dark
                          leuven
+                         spacemacs-dark
                          zenburn)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -289,8 +287,10 @@ in `dotspacemacs/user-config'.")
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (editorconfig-mode 1)
+  (setq powerline-default-separator nil)
   (spacemacs/toggle-mode-line-minor-modes-off)
-  (spacemacs/toggle-visual-line-navigation-on))
+  (spacemacs/toggle-visual-line-navigation-on)
+  (spaceline-compile))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -299,7 +299,7 @@ layers configuration. You are free to put any user code."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(paradox-github-token t))
+ '(paradox-github-token nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -27,9 +27,11 @@
   "," 'core-eval-py)
 
 (spacemacs/set-leader-keys
+  "os" 'bpr-spawn
   "ob" 'bpr-open-last-buffer
   "oj" 'core-bpr-jmake-cm-release
   "oz" 'core-bpr-jmake-and-zlxc
+  "ot" 'core-bpr-jmake-run-tests
   "oe" 'core-bpr-package-tests
   "or" 'elfeed
   "om" 'notmuch

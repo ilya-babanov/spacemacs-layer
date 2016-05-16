@@ -31,16 +31,22 @@
   (interactive)
   (bpr-spawn (concat z-env-export "jmake cm release")))
 
+(defun core-bpr-jmake-run-tests ()
+  "Run jmake cm release && jmake run_tests"
+  (interactive)
+  (bpr-spawn (concat z-env-export "jmake cm release && jmake run_tests")))
+
 (defun core-bpr-jmake-and-zlxc (group)
-  "Run jmake cm release"
-  (interactive "sZLXC run arguments:")
+  "Run jmake cm release && zlxc run"
+  (interactive "sZLXC run arguments: ")
   (bpr-spawn (concat z-env-export "jmake cm release && zlxc run " group)))
 
 (defun core-bpr-package-tests ()
   "Tests emacs-bpr package"
   (interactive)
-  (let* ((bpr-process-directory "~/my-projects/emacs-bpr/"))
-    (bpr-spawn "cask exec buttercup -L .")))
+  (let* ((bpr-process-directory "~/my/emacs-bpr/")
+         (bpr-scroll-direction -1))
+    (bpr-spawn "~/.cask/bin/cask exec buttercup -L .")))
 
 (defun core-restart-wifi-osx ()
   "Restarts wifi on osx"

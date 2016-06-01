@@ -1,9 +1,9 @@
 ;; fix for ein package
 ;; (add-to-list 'load-path "~/.emacs.d/private/core/misc/")
 
-(setq scroll-step 1)
-(setq auto-window-vscroll nil)
-(setq scroll-conservatively 10000)
+;; (setq scroll-step 1)
+;; (setq auto-window-vscroll nil)
+;; (setq scroll-conservatively 10000)
 
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
 (setq mouse-wheel-progressive-speed nil)
@@ -30,7 +30,9 @@
         "--run-together-min=2"))
 
 (with-eval-after-load 'projectile
-  (dolist (dir '("build.debug" "build.DEBUG" "build.host" "build.HOST"))
+  (add-to-list 'projectile-globally-ignored-directories "node_modules")
+  (setq projectile-enable-caching t)
+  (dolist (dir '("build.debug" "build.DEBUG" "build.host" "build.HOST" "build.APP" "build.app"))
     (add-to-list 'projectile-globally-ignored-directories dir)))
 
 (with-eval-after-load 'js2-mode
@@ -44,9 +46,6 @@
 (with-eval-after-load 'exec-path-from-shell
   (setq exec-path-from-shell-variables '("PATH" "GOPATH" "LANG"))
   (exec-path-from-shell-initialize))
-
-(with-eval-after-load 'projectile
-  (add-to-list 'projectile-globally-ignored-directories "node_modules"))
 
 (with-eval-after-load 'neotree
   (setq neo-vc-integration nil))

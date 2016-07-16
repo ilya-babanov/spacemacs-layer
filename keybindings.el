@@ -1,10 +1,10 @@
 (define-key evil-normal-state-map
   "\C-k"
-  (lambda () (interactive) (evil-scroll-up 5)))
+  (lambda () (interactive) (evil-scroll-up 10)))
 
 (define-key evil-normal-state-map
   "\C-j"
-  (lambda () (interactive) (evil-scroll-down 5)))
+  (lambda () (interactive) (evil-scroll-down 10)))
 
 (define-key evil-normal-state-map "<" 'helm-mini)
 (define-key evil-normal-state-map "§" 'helm-mini)

@@ -62,6 +62,7 @@ values."
      html
      markdown
      javascript
+     react
      python
      ipython-notebook
      shell-scripts

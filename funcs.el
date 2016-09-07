@@ -146,3 +146,9 @@
   "Copies file name to clipboard"
   (interactive)
   (core-copy-to-clipboard (core-get-file-name)))
+
+(defun core-copy-file-name-and-line-number ()
+  "Copies file name with current line number to clipboard"
+  (interactive)
+  (core-copy-to-clipboard
+   (concat (core-get-file-name) ":" (number-to-string (line-number-at-pos)))))

@@ -85,7 +85,7 @@
 (with-eval-after-load 'org
   (setq org-agenda-files '("~/my/org/organizer.org"))
   (setq org-startup-indented t)
-  (setq org-tags-column -110)
+  (setq org-tags-column -140)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((js . t)
@@ -101,7 +101,7 @@
            "* %?\n%i\n")
           ("w" "Work Tasks" entry
            (file+headline "~/my/org/organizer.org" "Work Tasks")
-           "* TODO %?\n%i\n%a\n%T\n"))))
+           "* TODO %?\n%i\n"))))
 
 (with-eval-after-load 'gnus
   ;; (gnus-add-configuration

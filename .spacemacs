@@ -19,7 +19,8 @@ values."
    dotspacemacs-configuration-layers
    '(osx
 
-     spacemacs-helm
+     colors
+     helm
      spacemacs-layouts
 
      (auto-completion
@@ -30,7 +31,6 @@ values."
      git
 
      spell-checking
-
      (syntax-checking
       :variables
       syntax-checking-enable-tooltips nil)
@@ -41,7 +41,6 @@ values."
       shell-default-height 60)
 
      org
-
      gnus
 
      go

@@ -119,3 +119,30 @@
   "Evaluatetes active region or current line as python code"
   (interactive)
   (core-eval-region-or-line 'python-shell-send-region))
+
+(defun core-open-work-org ()
+  "Opens org buffers"
+  (interactive)
+  (find-file "~/my/org/organizer.org")
+  (find-file-other-window "~/zon1/doc/report/ilia.txt")
+  (split-window-vertically)
+  (find-file "~/zon1/doc/design/version_plan.txt")
+  (goto-char (point-min))
+  (search-forward "(Ilia Babanov)"))
+
+(defun core-copy-to-clipboard (text)
+  "Copies text to clipboard"
+  (when text
+    (kill-new text)
+    (message "Text is copied to clipboard: %s" text)))
+
+(defun core-get-file-name ()
+  "Returns file path of the current buffer"
+  (if (equal major-mode 'dired-mode)
+      default-directory
+    (buffer-file-name)))
+
+(defun core-copy-file-name ()
+  "Copies file name to clipboard"
+  (interactive)
+  (core-copy-to-clipboard (core-get-file-name)))

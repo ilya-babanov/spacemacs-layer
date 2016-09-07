@@ -31,6 +31,16 @@
   (interactive)
   (bpr-spawn (concat z-env-export "jmake cm release")))
 
+(defun core-zvpn ()
+  "Open ansi-term bugger and runs zvpn"
+  (interactive)
+  (let* ((term-buffer (get-buffer-create "*zvpn*")))
+    (shell term-buffer)
+    (switch-to-buffer term-buffer)
+    (end-of-buffer)
+    (insert "rt zvpn")
+    (comint-send-input)))
+
 (defun core-bpr-jmake-run-tests ()
   "Run jmake cm release && jmake run_tests"
   (interactive)
@@ -39,7 +49,9 @@
 (defun core-bpr-jmake-and-zlxc (group)
   "Run jmake cm release && zlxc run"
   (interactive "sZLXC run arguments: ")
-  (bpr-spawn (concat z-env-export "cvsup && jmake cm release && zlxc run " group)))
+  (bpr-spawn (concat z-env-export
+                     "cvsup && zlxc stop && jmake cm release && zlxc run "
+                     group)))
 
 (defun core-bpr-package-tests ()
   "Tests emacs-bpr package"

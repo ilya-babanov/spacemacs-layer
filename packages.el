@@ -15,7 +15,8 @@
 
 (defun core/init-buttercup ())
 
-(defun core/init-editorconfig ())
+(defun core/init-editorconfig ()
+  (editorconfig-mode))
 
 (defun core/init-realgud ()
   (use-package realgud

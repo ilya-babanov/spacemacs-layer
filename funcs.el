@@ -25,7 +25,7 @@
   (delete-process "Tern"))
 
 (defun core-term (name)
-  "Open ansi-term bugger and runs zvpn"
+  "Open term buffer with given name"
   (interactive "sName: ")
   (let* ((term-buffer (get-buffer-create name)))
     (shell term-buffer)

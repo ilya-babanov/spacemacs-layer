@@ -31,7 +31,7 @@
     (shell term-buffer)
     (switch-to-buffer term-buffer)
     (end-of-buffer)
-    (insert "zsh")
+    (insert (concat "cd " default-directory))
     (comint-send-input)))
 
 (defun core-bpr-package-tests ()

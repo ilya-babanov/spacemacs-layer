@@ -39,9 +39,6 @@
   "gB" 'magit-branch-popup
   "hh" 'helm-semantic-or-imenu)
 
-(with-eval-after-load 'js2-mode
-  (define-key js2-mode-map (kbd "<tab>") 'js2-indent-bounce))
-
 (with-eval-after-load 'yasnippet
   (define-key yas-minor-mode-map (kbd "<tab>") 'yas-expand)
   (define-key yas-minor-mode-map (kbd "TAB") 'yas-expand))

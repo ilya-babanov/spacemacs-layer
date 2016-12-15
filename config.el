@@ -1,4 +1,5 @@
 (push (file-name-directory load-file-name) load-path)
+(require 'core-org-config)
 
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
 (setq mouse-wheel-progressive-speed nil)

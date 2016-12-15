@@ -105,7 +105,4 @@
            "* TODO %?\n%i\n%a\n%T\n")
           ("n" "Notes" entry
            (file+headline "~/organizer.org" "Notes")
-           "* %?\n%i\n")
-          ("w" "Work Tasks" entry
-           (file+headline "~/organizer.org" "Work Tasks")
-           "* TODO %?\n%i\n"))))
+           "* %?\n%i\n"))))

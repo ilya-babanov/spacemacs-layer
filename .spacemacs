@@ -35,6 +35,7 @@ values."
      colors
      helm
      spacemacs-layouts
+     evil-snipe
 
      (auto-completion
       :variables

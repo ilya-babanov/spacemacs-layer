@@ -1,15 +1,13 @@
 ;;; packages.el --- core Layer packages File for Spacemacs
 
-(setq core-packages
-    '(editorconfig
-      flycheck
-      flycheck-package
-      buttercup
-      realgud
-      helm-dash
-      (bpr :location local)))
-
-(setq core-excluded-packages '())
+(defconst core-packages
+  '(editorconfig
+    flycheck
+    flycheck-package
+    buttercup
+    realgud
+    helm-dash
+    (bpr :location local)))
 
 (defun core/init-helm-dash ())
 

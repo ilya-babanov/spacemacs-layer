@@ -15,11 +15,3 @@
 (add-hook 'comint-mode-hook 'ansi-color-for-comint-mode-on)
 
 (setq multi-term-program "bash")
-
-(setq ispell-program-name "aspell")
-(setq ispell-extra-args
-      '("--sug-mode=ultra"
-        "--lang=en_US"
-        "--run-together"
-        "--run-together-limit=5"
-        "--run-together-min=2"))

@@ -44,6 +44,13 @@
   (push "~/.emacs.d/private/core/snippets" yas-snippet-dirs))
 
 (defun core/post-init-flyspell ()
+  (setq ispell-program-name "aspell")
+  (setq ispell-extra-args
+        '("--sug-mode=ultra"
+          "--lang=en_US"
+          "--run-together"
+          "--run-together-limit=5"
+          "--run-together-min=2"))
   (add-hook 'prog-mode-hook 'flyspell-mode))
 
 (defun core/post-init-js2-mode ()

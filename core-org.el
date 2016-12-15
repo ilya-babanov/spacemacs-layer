@@ -16,6 +16,8 @@
            "* TODO %?\n%i\n%a\n%T\n")
           ("n" "Notes" entry
            (file+headline "~/organizer.org" "Notes")
-           "* %?\n%i\n"))))
+           "* %?\n%i\n")))
 
-(provide 'core-org-config)
+  (message "core-org initialized"))
+
+(provide 'core-org)

@@ -345,12 +345,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-  ;; (editorconfig-mode 1)
-  (setq powerline-default-separator nil)
-  (spacemacs/toggle-mode-line-minor-modes-off)
-  (spacemacs/toggle-visual-line-navigation-on)
-  ;; (spaceline-compile)
-  )
+  (core-init-misc))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.

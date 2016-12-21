@@ -13,6 +13,7 @@
     flyspell
     js2-mode
     projectile
+    evil-cleverparens
     (bpr :location local)))
 
 (defun core/init-helm-dash ())
@@ -20,6 +21,12 @@
 (defun core/init-buttercup ())
 
 (defun core/init-realgud ())
+
+(defun core/post-init-evil-cleverparens ()
+  (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
+  (add-hook 'racket-mode-hook #'evil-cleverparens-mode)
+  (add-hook 'elisp-mode #'evil-cleverparens-mode)
+  (evil-cleverparens-mode))
 
 (defun core/post-init-shell-pop ()
   (setq shell-pop-autocd-to-working-dir nil)

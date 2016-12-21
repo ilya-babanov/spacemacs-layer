@@ -36,6 +36,7 @@ values."
      helm
      spacemacs-layouts
      evil-snipe
+     evil-cleverparens
 
      (auto-completion
       :variables

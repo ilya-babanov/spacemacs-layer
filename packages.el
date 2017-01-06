@@ -90,8 +90,9 @@
 
 (defun core/init-editorconfig ()
   (use-package editorconfig
+    :ensure t
     :config
-    (editorconfig-mode)))
+    (editorconfig-mode 1)))
 
 (defun core/init-bpr ()
   (use-package bpr

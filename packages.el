@@ -12,6 +12,7 @@
     yasnippet
     flyspell
     js2-mode
+    racket-mode
     projectile
     evil-cleverparens
     (bpr :location local)))
@@ -22,10 +23,16 @@
 
 (defun core/init-realgud ())
 
+(defun core/post-init-racket-mode ()
+  (add-hook
+   'racket-mode-hook
+   (lambda ()
+     (setq eldoc-documentation-function #'racket-eldoc-function))))
+
 (defun core/post-init-evil-cleverparens ()
   (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
   (add-hook 'racket-mode-hook #'evil-cleverparens-mode)
-  (add-hook 'elisp-mode #'evil-cleverparens-mode)
+  (add-hook 'emacs-lisp-mode-hook #'evil-cleverparens-mode)
   (evil-cleverparens-mode))
 
 (defun core/post-init-shell-pop ()

@@ -15,6 +15,7 @@
     racket-mode
     projectile
     evil-cleverparens
+    web-mode
     (bpr :location local)))
 
 (defun core/init-helm-dash ())
@@ -22,6 +23,10 @@
 (defun core/init-buttercup ())
 
 (defun core/init-realgud ())
+
+(defun core/post-init-web-mode ()
+  (add-to-list 'auto-mode-alist '("\\.inc\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tmpl\\'" . web-mode)))
 
 (defun core/post-init-racket-mode ()
   (add-hook

@@ -34,6 +34,11 @@
     (insert (concat "cd " default-directory))
     (comint-send-input)))
 
+(defun core-boo-sync ()
+  "Run 'boo sync'"
+  (interactive)
+  (bpr-spawn "boo sync"))
+
 (defun core-bpr-package-tests ()
   "Tests emacs-bpr package"
   (interactive)

@@ -30,6 +30,7 @@
   "os" 'bpr-spawn
   "ob" 'bpr-open-last-buffer
   "ot" 'core-term
+  "oo" 'core-boo-sync
   "oe" 'core-bpr-package-tests
   "or" 'elfeed
   "om" 'notmuch

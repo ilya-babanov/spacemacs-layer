@@ -28,21 +28,13 @@
 
 (spacemacs/set-leader-keys
   "os" 'bpr-spawn
-  "ob" 'bpr-open-last-buffer
-  "ot" 'core-term
-  "oo" 'core-boo-sync
+  "oa" 'core-boo-sync-app
+  "ob" 'core-boo-sync-book
+  "ol" 'bpr-open-last-buffer
   "oe" 'core-bpr-package-tests
-  "or" 'elfeed
-  "om" 'notmuch
   "oW" 'core-restart-wifi-osx
+  "ot" 'core-term
   "oM" 'core-disable-scroll-margin
   "of" 'core-flyspell-save-word
   "gB" 'magit-branch-popup
   "hh" 'helm-semantic-or-imenu)
-
-(with-eval-after-load 'yasnippet
-  (define-key yas-minor-mode-map (kbd "<tab>") 'yas-expand)
-  (define-key yas-minor-mode-map (kbd "TAB") 'yas-expand))
-
-(with-eval-after-load 'elm-mode
-  (define-key elm-mode-map "\C-cc" 'company-elm))

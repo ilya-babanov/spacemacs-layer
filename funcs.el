@@ -27,17 +27,35 @@
 (defun core-term (name)
   "Open term buffer with given name"
   (interactive "sName: ")
-  (let* ((term-buffer (get-buffer-create name)))
-    (shell term-buffer)
-    (switch-to-buffer term-buffer)
-    (end-of-buffer)
-    (insert (concat "cd " default-directory))
-    (comint-send-input)))
+  (ansi-term "bash" name)
+  (switch-to-buffer (get-buffer (concat "*" name "*")))
+  (run-at-time 0.4 nil 'core-term-cd-to-root))
 
-(defun core-boo-sync ()
-  "Run 'boo sync'"
+(defun core-term-cd-to-root ()
+  (end-of-buffer)
+  (insert (concat "cd " (projectile-project-root)))
+  (term-send-input))
+
+(defun core-boo-run (command project)
+  "Runs 'boo [command] [project]"
+  (let ((bpr-close-after-success nil)
+        (bpr-scroll-direction -1))
+    (bpr-spawn (concat "boo " command " " project))))
+
+(defun core-boo-sync (project)
+  "Runs 'boo sync'"
+  (interactive "sProject: ")
+  (core-boo-run "sync" project))
+
+(defun core-boo-sync-app ()
+  "Runs 'boo sync app'"
   (interactive)
-  (bpr-spawn "boo sync"))
+  (core-boo-run "sync" "app"))
+
+(defun core-boo-sync-book ()
+  "Runs 'boo sync book'"
+  (interactive)
+  (core-boo-run "sync" "book"))
 
 (defun core-bpr-package-tests ()
   "Tests emacs-bpr package"

@@ -52,7 +52,7 @@ values."
 
      (shell
       :variables
-      shell-default-shell 'eshell
+      shell-default-shell 'ansi-term
       shell-default-term-shell "bash"
       shell-default-height 60)
 

@@ -20,6 +20,7 @@
   (add-hook 'comint-mode-hook 'ansi-color-for-comint-mode-on)
   (add-hook 'term-mode-hook 'ansi-color-for-comint-mode-on)
 
+  (setq helm-buffer-max-length 50)
   (setq eshell-ls-initial-args "-lah")
 
   (message "core-misc initialized"))

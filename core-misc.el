@@ -23,7 +23,7 @@
   (setq helm-buffer-max-length 50)
   (setq eshell-ls-initial-args "-lah")
 
-  (global-visual-line-mode 1)
+  (add-hook 'prog-mode-hook (lambda () (visual-line-mode 1)))
 
   (message "core-misc initialized"))
 

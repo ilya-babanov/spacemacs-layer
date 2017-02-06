@@ -73,7 +73,7 @@
   (add-hook 'prog-mode-hook 'flyspell-mode))
 
 (defun core/post-init-js2-mode ()
-  (setq js-curly-indent-offset 1)
+  (setq js-curly-indent-offset 0)
   (setq js2-strict-inconsistent-return-warning nil)
   (setq js2-strict-trailing-comma-warning nil)
   (setq js2-bounce-indent-p t)

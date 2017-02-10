@@ -38,6 +38,8 @@ values."
      evil-snipe
      evil-cleverparens
 
+     (gtags :variables gtags-enable-by-default t)
+
      (auto-completion
       :variables
       auto-completion-enable-sort-by-usage t)

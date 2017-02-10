@@ -16,6 +16,7 @@
     projectile
     evil-cleverparens
     web-mode
+    helm-projectile
     (bpr :location local)))
 
 (defun core/init-helm-dash ())
@@ -23,6 +24,9 @@
 (defun core/init-buttercup ())
 
 (defun core/init-realgud ())
+
+(defun core/pre-init-helm-projectile ()
+  (setq helm-projectile-fuzzy-match nil))
 
 (defun core/post-init-web-mode ()
   (add-to-list 'auto-mode-alist '("\\.inc\\'" . web-mode))

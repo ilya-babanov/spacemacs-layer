@@ -1,5 +1,5 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: cl
-# key: cl
+# name: tas
+# key: tas
 # --
-console.log('$1', $1);$0
+<TMPL_ASSIGN $0>

@@ -9,7 +9,7 @@
 (define-key evil-normal-state-map "<" 'helm-mini)
 (define-key evil-normal-state-map "§" 'helm-mini)
 (define-key evil-normal-state-map "`" 'helm-mini)
-(define-key evil-normal-state-map "!" 'evil-search-highlight-persist-remove-all)
+(define-key evil-normal-state-map "!" 'spacemacs/evil-search-clear-highlight)
 (define-key global-map (kbd "M-§") 'helm-mini)
 (define-key global-map (kbd "<f4>") 'spacemacs/default-pop-shell)
 

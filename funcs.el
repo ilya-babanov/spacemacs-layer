@@ -38,9 +38,18 @@
 
 (defun core-boo-run (command project)
   "Runs 'boo [command] [project]"
-  (let ((bpr-close-after-success nil)
-        (bpr-scroll-direction -1))
+  (let ((bpr-scroll-direction -1))
     (bpr-spawn (concat "boo " command " " project))))
+
+(defun core-boo-restart (project)
+  "Runs 'boo restart'"
+  (interactive "sProject: ")
+  (core-boo-run "restart" project))
+
+(defun core-boo-restart-app ()
+  "Runs 'boo restart'"
+  (interactive)
+  (core-boo-run "restart" "app"))
 
 (defun core-boo-sync (project)
   "Runs 'boo sync'"
@@ -56,6 +65,16 @@
   "Runs 'boo sync book'"
   (interactive)
   (core-boo-run "sync" "book"))
+
+(defun core-boo-sync-restart (project)
+  "Runs 'boo sync PROJECT && boo restart PROJECT'"
+  (interactive "sProject: ")
+  (bpr-spawn (concat "boo sync " project " && boo restart " project)))
+
+(defun core-boo-sync-restart-app ()
+  "Runs 'boo sync app && boo restart app'"
+  (interactive)
+  (core-boo-sync-restart "app"))
 
 (defun core-bpr-package-tests ()
   "Tests emacs-bpr package"

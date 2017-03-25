@@ -176,3 +176,8 @@
   (interactive)
   (core-copy-to-clipboard
    (concat (core-get-file-name) ":" (number-to-string (line-number-at-pos)))))
+
+(defun core-magit-log-mine ()
+  "Logs mine commits"
+  (interactive)
+  (magit-log nil '("-n128" "--decorate" "--author=babanov")))

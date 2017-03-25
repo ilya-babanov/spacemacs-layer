@@ -17,6 +17,8 @@
     evil-cleverparens
     web-mode
     helm-projectile
+    neotree
+    magit
     (bpr :location local)))
 
 (defun core/init-helm-dash ())
@@ -24,6 +26,35 @@
 (defun core/init-buttercup ())
 
 (defun core/init-realgud ())
+
+(defun core/post-init-magit ()
+  (setq magit-status-headers-hook
+        '(magit-insert-error-header
+          magit-insert-head-branch-header))
+  ;; magit-insert-upstream-branch-header
+  ;; magit-insert-diff-filter-header
+  ;; magit-insert-upstream-branch-header
+  (setq magit-status-sections-hook
+        '(magit-insert-status-headers
+          magit-insert-merge-log
+          magit-insert-rebase-sequence
+          magit-insert-am-sequence
+          magit-insert-sequencer-sequence
+          magit-insert-bisect-output
+          magit-insert-bisect-rest
+          magit-insert-bisect-log
+          magit-insert-untracked-files
+          magit-insert-unstaged-changes
+          magit-insert-staged-changes
+          magit-insert-unpushed-to-upstream))
+  ;; magit-insert-unpulled-from-upstream
+  ;; magit-insert-unpulled-from-pushremote
+  ;; magit-insert-unpushed-to-pushremote
+  (setq magit-log-arguments '("-n128" "--decorate"))
+  (setq magit-log-section-arguments magit-log-arguments))
+
+(defun core/post-init-neotree()
+  (setq neo-window-width 50))
 
 (defun core/pre-init-helm-projectile ()
   (setq helm-projectile-fuzzy-match nil))

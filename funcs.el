@@ -27,9 +27,10 @@
 (defun core-term (name)
   "Open term buffer with given name"
   (interactive "sName: ")
-  (ansi-term "bash" name)
-  (switch-to-buffer (get-buffer (concat "*" name "*")))
-  (run-at-time 0.4 nil 'core-term-cd-to-root))
+  (let ((buf-name (concat "*" name "*")))
+    (shell buf-name)
+    (switch-to-buffer (get-buffer buf-name))
+    (run-at-time 0.4 nil 'core-term-cd-to-root))))
 
 (defun core-term-cd-to-root ()
   (end-of-buffer)

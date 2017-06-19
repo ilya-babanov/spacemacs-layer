@@ -14,9 +14,12 @@
      (perl . t)))
 
   (setq org-capture-templates
-        `(("n" "Note" entry
+        `(("l" "Link" entry
+           (file+headline ,my-org-file "Links")
+           "* %?\n\%i\n")
+          ("n" "Note" entry
            (file+headline ,my-org-file "Notes")
-           "* %?\n\t\n%i\n\n")
+           "* %?\n%t\n%i\n")
           ("b" "Book" entry
            (file+headline ,my-org-file "Books")
            "* %i%?\nAuthor: \n")

@@ -26,6 +26,14 @@
 
   (setq helm-buffer-max-length 50)
 
+  (setq eshell-prompt-function
+        (lambda nil
+          (concat
+           (propertize (eshell/dirs) 'face `(:foreground "blue"))
+           (propertize "$ " 'face `(:foreground "green")))))
+
+  (setq eshell-highlight-prompt nil)
+
   (message "core-misc initialized"))
 
 (provide 'core-misc)

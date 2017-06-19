@@ -30,52 +30,51 @@
   (let ((buf-name (concat "*" name "*")))
     (shell buf-name)
     (switch-to-buffer (get-buffer buf-name))
-    (run-at-time 0.4 nil 'core-term-cd-to-root))))
+    (run-at-time 0.4 nil 'core-term-cd-to-root)))
 
 (defun core-term-cd-to-root ()
   (end-of-buffer)
   (insert (concat "cd " (projectile-project-root)))
   (term-send-input))
 
+(defun core-npm-build ()
+  "Runs 'npm run build' command"
+  (interactive)
+  (let ((bpr-scroll-direction -1))
+    (bpr-spawn "npm run build")))
+
+(defvar core-boo-role "app"
+  "Default role for core-boo* commands")
+
+(defun core-boo-set-role (role)
+  "Sets default role for core-boo* commands"
+  (interactive "sRole: ")
+  (setq core-boo-role role))
+
 (defun core-boo-run (command project)
   "Runs 'boo [command] [project]"
   (let ((bpr-scroll-direction -1))
     (bpr-spawn (concat "boo " command " " project))))
 
-(defun core-boo-restart (project)
-  "Runs 'boo restart'"
-  (interactive "sProject: ")
-  (core-boo-run "restart" project))
-
-(defun core-boo-restart-app ()
-  "Runs 'boo restart'"
+(defun core-boo-restart ()
+  "Runs 'boo restart ROLE'"
   (interactive)
-  (core-boo-run "restart" "app"))
+  (core-boo-run "restart" core-boo-role))
 
-(defun core-boo-sync (project)
-  "Runs 'boo sync'"
-  (interactive "sProject: ")
-  (core-boo-run "sync" project))
-
-(defun core-boo-sync-app ()
-  "Runs 'boo sync app'"
+(defun core-boo-sync ()
+  "Runs 'boo sync ROLE'"
   (interactive)
-  (core-boo-run "sync" "app"))
+  (core-boo-run "sync" core-boo-role))
 
-(defun core-boo-sync-book ()
-  "Runs 'boo sync book'"
+(defun core-boo-sync-restart ()
+  "Runs 'boo sync ROLE && boo restart ROLE'"
   (interactive)
-  (core-boo-run "sync" "book"))
+  (bpr-spawn (concat "boo sync " core-boo-role " && boo restart " core-boo-role)))
 
-(defun core-boo-sync-restart (project)
-  "Runs 'boo sync PROJECT && boo restart PROJECT'"
-  (interactive "sProject: ")
-  (bpr-spawn (concat "boo sync " project " && boo restart " project)))
-
-(defun core-boo-sync-restart-app ()
-  "Runs 'boo sync app && boo restart app'"
+(defun core-boo-concat ()
+  "Runs 'boo concat ROLE'"
   (interactive)
-  (core-boo-sync-restart "app"))
+  (core-boo-run "concat" core-boo-role))
 
 (defun core-bpr-package-tests ()
   "Tests emacs-bpr package"
@@ -181,3 +180,13 @@
   "Logs mine commits"
   (interactive)
   (magit-log nil '("-n128" "--decorate" "--author=babanov")))
+
+(defun core-insert-g-arg ()
+  "Inserts ' -g*.' text"
+  (interactive)
+  (insert-for-yank " -g*."))
+
+(defun core-insert-g-js-arg ()
+  "Inserts ' -g*.js' text"
+  (interactive)
+  (insert-for-yank " -g*.js"))

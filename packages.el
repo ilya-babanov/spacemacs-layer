@@ -1,6 +1,5 @@
 (defconst core-packages
-  '(editorconfig
-    flycheck
+  '(flycheck
     flycheck-package
     buttercup
     realgud
@@ -18,7 +17,8 @@
     web-mode
     helm-projectile
     neotree
-    magit
+    ;; magit
+    plsense
     (bpr :location local)))
 
 (defun core/init-helm-dash ())
@@ -27,31 +27,31 @@
 
 (defun core/init-realgud ())
 
-(defun core/post-init-magit ()
-  (setq magit-status-headers-hook
-        '(magit-insert-error-header
-          magit-insert-head-branch-header))
-  ;; magit-insert-upstream-branch-header
-  ;; magit-insert-diff-filter-header
-  ;; magit-insert-upstream-branch-header
-  (setq magit-status-sections-hook
-        '(magit-insert-status-headers
-          magit-insert-merge-log
-          magit-insert-rebase-sequence
-          magit-insert-am-sequence
-          magit-insert-sequencer-sequence
-          magit-insert-bisect-output
-          magit-insert-bisect-rest
-          magit-insert-bisect-log
-          magit-insert-untracked-files
-          magit-insert-unstaged-changes
-          magit-insert-staged-changes
-          magit-insert-unpushed-to-upstream))
-  ;; magit-insert-unpulled-from-upstream
-  ;; magit-insert-unpulled-from-pushremote
-  ;; magit-insert-unpushed-to-pushremote
-  (setq magit-log-arguments '("-n128" "--decorate"))
-  (setq magit-log-section-arguments magit-log-arguments))
+;; (defun core/post-init-magit ()
+;;   (setq magit-status-headers-hook
+;;         '(magit-insert-error-header
+;;           magit-insert-head-branch-header))
+;;   ;; magit-insert-upstream-branch-header
+;;   ;; magit-insert-diff-filter-header
+;;   ;; magit-insert-upstream-branch-header
+;;   (setq magit-status-sections-hook
+;;         '(magit-insert-status-headers
+;;           magit-insert-merge-log
+;;           magit-insert-rebase-sequence
+;;           magit-insert-am-sequence
+;;           magit-insert-sequencer-sequence
+;;           magit-insert-bisect-output
+;;           magit-insert-bisect-rest
+;;           magit-insert-bisect-log
+;;           magit-insert-untracked-files
+;;           magit-insert-unstaged-changes
+;;           magit-insert-staged-changes
+;;           magit-insert-unpushed-to-upstream))
+;;   ;; magit-insert-unpulled-from-upstream
+;;   ;; magit-insert-unpulled-from-pushremote
+;;   ;; magit-insert-unpushed-to-pushremote
+;;   (setq magit-log-arguments '("-n128" "--decorate"))
+;;   (setq magit-log-section-arguments magit-log-arguments))
 
 (defun core/post-init-neotree()
   (setq neo-window-width 50))
@@ -125,21 +125,13 @@
    'js2-mode-hook
    (lambda ()
      (setq flycheck-highlighting-mode 'lines)
-     (setq flycheck-check-syntax-automatically '(save mode-enabled))))
-  (dolist (mode '(markdown-mode git-commit-mode text-mode org-mode))
-    (spacemacs/add-flycheck-hook mode)))
+     (setq flycheck-check-syntax-automatically '(save mode-enabled)))))
 
 (defun core/init-flycheck-package ()
   (use-package flycheck-package
     :defer t
     :config
     (flycheck-package-setup)))
-
-(defun core/init-editorconfig ()
-  (use-package editorconfig
-    :ensure t
-    :config
-    (editorconfig-mode 1)))
 
 (defun core/init-bpr ()
   (use-package bpr
@@ -148,7 +140,6 @@
     (autoload 'bpr-spawn "~/projects/emacs-bpr/bpr.el")
     (autoload 'bpr-open-last-buffer "~/projects/emacs-bpr/bpr.el")
     :config
-    (setq bpr-close-after-success t)
     (setq bpr-colorize-output t)))
 
 (defun core/post-init-org ()

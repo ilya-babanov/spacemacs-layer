@@ -17,6 +17,12 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 
+(define-key global-map "\C-cg" 'core-insert-g-arg)
+(define-key global-map "\C-cj" 'core-insert-g-js-arg)
+
+(spacemacs/set-leader-keys-for-major-mode 'perl-mode
+  "gd" 'cperl-perldoc-at-point)
+
 (spacemacs/set-leader-keys-for-major-mode 'js2-mode
   "df" 'js-doc-insert-function-doc
   "dt" 'js-doc-insert-file-doc
@@ -28,11 +34,12 @@
 
 (spacemacs/set-leader-keys
   "os" 'bpr-spawn
-  "oa" 'core-boo-sync-app
-  "ob" 'core-boo-sync-book
-  "or" 'core-boo-restart-app
-  "oR" 'core-boo-sync-restart-app
   "ol" 'bpr-open-last-buffer
+  "on" 'core-npm-build
+  "ob" 'core-boo-set-role
+  "oo" 'core-boo-sync
+  "or" 'core-boo-sync-restart
+  "oc" 'core-boo-concat
   "oe" 'core-bpr-package-tests
   "oW" 'core-restart-wifi-osx
   "ot" 'core-term
@@ -40,5 +47,6 @@
   "of" 'core-flyspell-save-word
   "op" (lambda () (interactive) (profiler-start 'cpu))
   "oP" 'profiler-report
+  "oi" 'comint-clear-buffer
   "gB" 'magit-branch-popup
   "hh" 'helm-semantic-or-imenu)

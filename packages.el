@@ -18,7 +18,6 @@
     helm-projectile
     neotree
     ;; magit
-    plsense
     (bpr :location local)))
 
 (defun core/init-helm-dash ())

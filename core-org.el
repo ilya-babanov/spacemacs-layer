@@ -13,6 +13,8 @@
      (shell . t)
      (perl . t)))
 
+  (add-hook 'org-mode-hook 'auto-fill-mode)
+
   (setq org-capture-templates
         `(("l" "Link" entry
            (file+headline ,my-org-file "Links")

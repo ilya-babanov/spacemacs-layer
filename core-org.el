@@ -1,5 +1,5 @@
 (defun core-init-org ()
-  (setq my-org-file "~/org/organizer.org")
+  (setq my-org-file "~/org/org.txt")
   (setq org-agenda-files `(,my-org-file))
   (setq org-startup-indented t)
   (setq org-tags-column -100)
@@ -13,7 +13,7 @@
      (shell . t)
      (perl . t)))
 
-  (add-hook 'org-mode-hook 'auto-fill-mode)
+  ;; (add-hook 'org-mode-hook 'auto-fill-mode)
 
   (setq org-capture-templates
         `(("l" "Link" entry
